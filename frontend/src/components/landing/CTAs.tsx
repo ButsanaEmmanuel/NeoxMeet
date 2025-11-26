@@ -1,0 +1,118 @@
+import React from 'react';
+import { cn } from '../../lib/utils';
+
+export function TrustStrip() {
+  const items = [
+    'Chiffrement',
+    'Rôles & SSO',
+    'Journal d’audit (Enterprise)',
+  ];
+
+  return (
+    <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-slate-600">
+      {items.map((t) => (
+        <span
+          key={t}
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 backdrop-blur"
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+          {t}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+type ActionProps = {
+  children: React.ReactNode;
+  href?: string;
+  className?: string;
+} & React.AnchorHTMLAttributes<HTMLAnchorElement> &
+  React.ButtonHTMLAttributes<HTMLButtonElement>;
+
+export function PrimaryCTA({ children, href, className, ...props }: ActionProps) {
+  if (href) {
+    return (
+      <a
+        href={href}
+        className={cn(
+          'relative inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 font-semibold text-white bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 shadow-lg shadow-indigo-500/20 transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-4 focus:ring-indigo-200 overflow-hidden',
+          className,
+        )}
+        {...props}
+      >
+        <span
+          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 hover:opacity-100"
+        >
+          <span
+            className="absolute -left-1/3 top-0 h-full w-1/3 rotate-12 bg-white/20 blur-md animate-[shine_1.2s_ease-in-out_infinite]"
+          />
+        </span>
+        {children}
+        <style jsx>{`
+          @keyframes shine {
+            0% { transform: translateX(0) rotate(12deg); }
+            100% { transform: translateX(320%) rotate(12deg); }
+          }
+        `}</style>
+      </a>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      className={cn(
+        'relative inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 font-semibold text-white bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 shadow-lg shadow-indigo-500/20 transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-4 focus:ring-indigo-200 overflow-hidden',
+        className,
+      )}
+      {...props}
+    >
+      <span
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 hover:opacity-100"
+      >
+        <span
+          className="absolute -left-1/3 top-0 h-full w-1/3 rotate-12 bg-white/20 blur-md animate-[shine_1.2s_ease-in-out_infinite]"
+        />
+      </span>
+
+      {children}
+      <style jsx>{`
+        @keyframes shine {
+          0% { transform: translateX(0) rotate(12deg); }
+          100% { transform: translateX(320%) rotate(12deg); }
+        }
+      `}</style>
+    </button>
+  );
+}
+
+export function HeaderCTA({ children, href, className, ...props }: ActionProps) {
+  if (href) {
+    return (
+      <a
+        href={href}
+        className={cn(
+          'h-10 rounded-full px-5 font-semibold border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 transition inline-flex items-center justify-center',
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      className={cn(
+        'h-10 rounded-full px-5 font-semibold border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 transition inline-flex items-center justify-center',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}

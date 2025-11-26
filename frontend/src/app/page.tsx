@@ -1,5 +1,6 @@
 import { Footer } from '../components/landing/Footer';
 import { Header } from '../components/landing/Header';
+import { PrimaryCTA, TrustStrip } from '../components/landing/CTAs';
 
 const highlights = [
   {
@@ -19,7 +20,7 @@ const highlights = [
   },
   {
     label: 'Security',
-    title: 'Uptime 99,9%',
+    title: 'Disponibilité 99,9%',
     description: 'Flux stables partout où vos équipes se connectent.',
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -88,17 +89,14 @@ export default function Home() {
                   <span className="bg-gradient-to-r from-indigo-600 via-sky-500 to-cyan-400 bg-clip-text text-transparent">traduire</span>.
                 </h1>
                 <p className="max-w-2xl text-lg text-slate-600">
-                  Sous-titres instantanés, traduction en direct, et compte-rendu automatique — sans plugin.
+                  Sous-titres instantanés, traduction en direct et compte-rendu automatique — sans plugin.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <a
-                  className="button-shine inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 via-sky-600 to-cyan-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-200 transition hover:-translate-y-0.5"
-                  href="/register"
-                >
+                <PrimaryCTA href="/register">
                   Réserver une démo
                   <ArrowIcon />
-                </a>
+                </PrimaryCTA>
                 <a
                   className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:-translate-y-0.5 hover:border-indigo-200/80 hover:text-indigo-800"
                   href="/dashboard"
@@ -106,12 +104,20 @@ export default function Home() {
                   Lancer une réunion
                 </a>
               </div>
+              <a
+                className="inline-flex items-center gap-2 text-sm font-semibold text-slate-800 transition hover:text-indigo-700"
+                href="/demo"
+              >
+                Voir une démo 20s
+                <ArrowIcon />
+              </a>
+              <TrustStrip />
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="relative overflow-hidden rounded-2xl border border-indigo-100/80 bg-gradient-to-br from-indigo-50 via-white to-sky-50 p-5 text-sm text-indigo-900 shadow-sm shadow-indigo-100">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.18),transparent_45%)]" aria-hidden />
                   <div className="relative space-y-1">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-indigo-600">Disponibilité</p>
-                    <p className="text-2xl font-semibold">99,9%</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-indigo-600">Disponibilité 99,9%</p>
+                    <p className="text-2xl font-semibold">SLA premium</p>
                     <p className="text-indigo-800">Flux stables et support 24/7.</p>
                   </div>
                 </div>
@@ -148,19 +154,19 @@ export default function Home() {
                   <div className="mt-6 space-y-4 text-sm text-slate-700">
                     <div className="relative overflow-hidden rounded-2xl border border-slate-100/80 bg-slate-50/70 p-4 shadow-sm backdrop-blur">
                       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(59,130,246,0.12),transparent_55%)]" aria-hidden />
-                      <div className="relative flex items-start gap-3">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-100 to-sky-100 text-xs font-semibold text-indigo-700 shadow-sm">AI</div>
-                        <div>
-                          <p className="font-semibold text-slate-900">Notes automatiques</p>
-                          <p>Décisions et actions listées en temps réel.</p>
+                        <div className="relative flex items-start gap-3">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-100 to-sky-100 text-xs font-semibold text-indigo-700 shadow-sm">AI</div>
+                          <div>
+                            <p className="font-semibold text-slate-900">Notes automatiques</p>
+                            <p>Décisions et actions listées en temps réel.</p>
+                          </div>
+                          <span className="ml-auto rounded-full border border-cyan-200/70 bg-cyan-50 px-3 py-1 text-[11px] font-semibold text-cyan-700 shadow-sm">
+                            Traduction live • Transcription
+                          </span>
                         </div>
-                        <span className="ml-auto rounded-full border border-cyan-200/70 bg-cyan-50 px-3 py-1 text-[11px] font-semibold text-cyan-700 shadow-sm">
-                          Live Translate • Transcript
-                        </span>
                       </div>
-                    </div>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      <div className="overflow-hidden rounded-2xl border border-slate-100/70 bg-white/80 p-4 shadow-sm backdrop-blur">
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="overflow-hidden rounded-2xl border border-slate-100/70 bg-white/80 p-4 shadow-sm backdrop-blur">
                         <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Participants</p>
                         <div className="mt-1 flex items-center justify-between">
                           <p className="text-2xl font-semibold text-slate-900">12</p>
@@ -168,38 +174,43 @@ export default function Home() {
                         </div>
                         <p className="text-slate-600">Rejoins en un clic.</p>
                       </div>
-                      <div className="overflow-hidden rounded-2xl border border-slate-100/70 bg-white/80 p-4 shadow-sm backdrop-blur">
-                        <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Durée</p>
-                        <div className="mt-1 flex items-center justify-between">
-                          <p className="text-2xl font-semibold text-slate-900">30 min</p>
-                          <span className="rounded-full bg-gradient-to-r from-emerald-500/10 via-sky-400/10 to-cyan-300/10 px-3 py-1 text-[11px] font-semibold text-emerald-700">Calendrier sync</span>
-                        </div>
-                        <p className="text-slate-600">Synchronisée au calendrier.</p>
-                      </div>
-                    </div>
-                    <div className="overflow-hidden rounded-2xl border border-indigo-100/80 bg-gradient-to-r from-indigo-50 via-sky-50 to-cyan-50 p-4 shadow-sm">
-                      <div className="flex flex-wrap items-start gap-3">
-                        <div className="flex items-center gap-2 rounded-full bg-slate-900 px-3 py-2 text-[11px] font-semibold text-cyan-300 shadow-sm">
-                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden />
-                          FR → EN live
-                        </div>
-                        <button className="rounded-full border border-slate-200/70 bg-white/80 px-3 py-2 text-xs font-semibold text-slate-800 shadow-sm transition hover:-translate-y-0.5">
-                          Switch
-                        </button>
-                        <span className="ml-auto rounded-full bg-white/70 px-3 py-2 text-[11px] font-semibold text-slate-700 shadow-sm">Captions + Traduction</span>
-                      </div>
-                      <div className="mt-3 space-y-2 text-xs text-slate-700">
-                        <div className="flex items-center gap-2">
-                          <span className="h-1.5 w-10 rounded-full bg-gradient-to-r from-indigo-500 via-sky-500 to-cyan-300 shadow-sm" aria-hidden />
-                          <p className="animate-caption-line">« Merci pour la démo, on signe ? »</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="h-1.5 w-8 rounded-full bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 shadow-sm" aria-hidden />
-                          <p className="animate-caption-line" style={{ animationDelay: '2s' }}>
-                            « Traduction active pour Aiko (JP) »
-                          </p>
+                        <div className="overflow-hidden rounded-2xl border border-slate-100/70 bg-white/80 p-4 shadow-sm backdrop-blur">
+                          <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">Durée</p>
+                          <div className="mt-1 flex items-center justify-between">
+                            <p className="text-2xl font-semibold text-slate-900">30 min</p>
+                            <span className="rounded-full bg-gradient-to-r from-emerald-500/10 via-sky-400/10 to-cyan-300/10 px-3 py-1 text-[11px] font-semibold text-emerald-700">Sync calendrier</span>
+                          </div>
+                          <p className="text-slate-600">Synchronisée au calendrier.</p>
                         </div>
                       </div>
+                      <div className="overflow-hidden rounded-2xl border border-indigo-100/80 bg-gradient-to-r from-indigo-50 via-sky-50 to-cyan-50 p-4 shadow-sm">
+                        <div className="flex flex-wrap items-start gap-3">
+                          <div className="flex items-center gap-2 rounded-full bg-slate-900 px-3 py-2 text-[11px] font-semibold text-cyan-300 shadow-sm">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden />
+                            Traduction live
+                          </div>
+                          <span className="rounded-full border border-slate-200/70 bg-white/80 px-3 py-2 text-[11px] font-semibold text-slate-800 shadow-sm">
+                            Transcription
+                          </span>
+                          <button className="text-xs font-semibold text-indigo-700 underline-offset-4 transition hover:text-indigo-800 hover:underline">
+                            Basculer
+                          </button>
+                        </div>
+                        <p className="mt-3 text-[12px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+                          Sous-titres + traduction
+                        </p>
+                        <div className="mt-2 space-y-2 text-xs text-slate-700">
+                          <div className="flex items-center gap-2">
+                            <span className="h-1.5 w-10 rounded-full bg-gradient-to-r from-indigo-500 via-sky-500 to-cyan-300 shadow-sm" aria-hidden />
+                            <p className="animate-caption-line">Décision : signature vendredi</p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="h-1.5 w-8 rounded-full bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 shadow-sm" aria-hidden />
+                            <p className="animate-caption-line" style={{ animationDelay: '2s' }}>
+                              Action : @Nadia envoie le devis
+                            </p>
+                          </div>
+                        </div>
                     </div>
                     <div className="flex items-center justify-between rounded-2xl border border-slate-100 bg-white/80 p-4 shadow-sm backdrop-blur">
                       <div>
@@ -221,9 +232,8 @@ export default function Home() {
                     <div className="relative h-8 w-8 rounded-full bg-gradient-to-br from-indigo-500 via-sky-400 to-cyan-300 shadow-lg shadow-indigo-200/60" />
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">AI Core</p>
-                    <p className="text-sm font-semibold text-slate-900">Translator</p>
-                    <p className="text-xs text-slate-600">Voix, texte, actions.</p>
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Noyau IA</p>
+                    <p className="text-sm font-semibold text-slate-900">Voix, texte, actions.</p>
                   </div>
                 </div>
               </div>
