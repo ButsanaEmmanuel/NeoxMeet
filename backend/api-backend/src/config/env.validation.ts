@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const envValidationSchema = z.object({
   NODE_ENV: z.string().default('development'),
-  PORT: z.coerce.number().default(3000),
+  PORT: z.coerce.number().default(3001),
   GLOBAL_PREFIX: z.string().optional().default(''),
   DATABASE_URL: z.string(),
   REDIS_URL: z.string(),
