@@ -1,15 +1,61 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 Int       @id @default(autoincrement())
+  email              String    @unique
+  passwordHash       String
+  name               String
+  hashedRefreshToken String?
+  createdAt          DateTime  @default(now())
+  rooms              Room[]
+}
+
+model Room {
+  id              String            @id @default(uuid())
+  code            String            @unique
+  title           String
+  ownerId         Int
+  owner           User              @relation(fields: [ownerId], references: [id])
+  meetingSessions MeetingSession[]
+  createdAt       DateTime          @default(now())
+}
+
+model MeetingSession {
+  id                 String              @id @default(uuid())
+  roomId             String
+  room               Room                @relation(fields: [roomId], references: [id])
+  startedAt          DateTime
+  endedAt            DateTime?
+  transcriptSegments TranscriptSegment[]
+  transcriptArtifact TranscriptArtifact?
+}
+
+model TranscriptSegment {
+  id                String   @id @default(uuid())
+  meetingSessionId  String
+  meetingSession    MeetingSession @relation(fields: [meetingSessionId], references: [id])
+  speakerIdentity   String?
+  lang              String
+  startMs           Int
+  endMs             Int
+  text              String
+  createdAt         DateTime @default(now())
+}
+
+model TranscriptArtifact {
+  id               String   @id @default(uuid())
+  meetingSessionId String   @unique
+  meetingSession   MeetingSession @relation(fields: [meetingSessionId], references: [id])
+  cleanedTranscript String
+  summary          String
+  decisions        Json
+  actionItems      Json
+  createdAt        DateTime @default(now())
 }
