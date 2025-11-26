@@ -1,6 +1,9 @@
 import React from 'react';
 import { cn } from '../../lib/utils';
 
+const premiumOutlineCtaClasses =
+  'inline-flex h-12 items-center justify-center rounded-full px-6 font-semibold border border-slate-200 bg-white text-slate-900 transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-300 hover:bg-gradient-to-r hover:from-indigo-50 hover:via-violet-50 hover:to-cyan-50 hover:shadow-md hover:shadow-indigo-500/10 hover:text-indigo-700 active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-indigo-200';
+
 export function TrustStrip() {
   const items = [
     {
@@ -78,6 +81,22 @@ type ActionProps = {
   className?: string;
 } & React.AnchorHTMLAttributes<HTMLAnchorElement> &
   React.ButtonHTMLAttributes<HTMLButtonElement>;
+
+export function OutlineCTA({ children, href, className, ...props }: ActionProps) {
+  if (href) {
+    return (
+      <a href={href} className={cn(premiumOutlineCtaClasses, className)} {...props}>
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <button type="button" className={cn(premiumOutlineCtaClasses, className)} {...props}>
+      {children}
+    </button>
+  );
+}
 
 export function PrimaryCTA({ children, href, className, ...props }: ActionProps) {
   if (href) {
