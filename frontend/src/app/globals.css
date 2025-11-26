@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #04060b;
+  --foreground: #f6f7fb;
+  --card-bg: rgba(14, 18, 31, 0.85);
+  --subtle-card-bg: rgba(255, 255, 255, 0.03);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --accent-a: #5cc4ff;
+  --accent-b: #b592ff;
+  --muted: #aab4c6;
 }
 
 @theme inline {
@@ -12,15 +18,68 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  margin: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-a);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(56, 189, 248, 0.3);
+  color: #0b1222;
+}
+
+.hero-grid {
+  background-image: linear-gradient(160deg, rgba(92, 196, 255, 0.18), rgba(14, 18, 31, 0.9));
+}
+
+.aurora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 20% 20%, rgba(92, 196, 255, 0.2), transparent 55%),
+    radial-gradient(circle at 80% 0%, rgba(181, 146, 255, 0.18), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(92, 196, 255, 0.12), transparent 40%);
+  filter: blur(80px);
+  opacity: 0.7;
+}
+
+@keyframes captionFlow {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  10%,
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-2px);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-caption-line {
+  animation: captionFlow 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-caption-line {
+    animation: none;
+  }
 }
