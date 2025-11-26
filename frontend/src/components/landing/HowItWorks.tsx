@@ -59,18 +59,19 @@ export function HowItWorksSection() {
       const firstRect = badges[0].getBoundingClientRect();
       const lastRect = badges[badges.length - 1].getBoundingClientRect();
 
-      const centerX = firstRect.left + firstRect.width / 2 - cardRect.left;
-      const top = firstRect.top + firstRect.height / 2 - cardRect.top;
-      const height = lastRect.top + lastRect.height / 2 - cardRect.top - top;
+      const firstCenterX = firstRect.left + firstRect.width / 2 - cardRect.left;
+      const firstCenterY = firstRect.top + firstRect.height / 2 - cardRect.top;
+      const lastCenterY = lastRect.top + lastRect.height / 2 - cardRect.top;
+      const lineHeight = lastCenterY - firstCenterY;
 
       const activeIndex = steps.findIndex((step) => step.id === activeStep);
       const activeBadge = badges[activeIndex];
       const activeRect = activeBadge?.getBoundingClientRect();
 
-      const activeHeight = activeRect ? activeRect.top + activeRect.height / 2 - cardRect.top - top : 0;
-      const clampedProgress = Math.max(0, Math.min(height, activeHeight));
+      const activeCenterY = activeRect ? activeRect.top + activeRect.height / 2 - cardRect.top : 0;
+      const clampedProgress = Math.max(0, Math.min(lineHeight, activeCenterY - firstCenterY));
 
-      setLineMetrics({ left: centerX, top, height, progressHeight: clampedProgress });
+      setLineMetrics({ left: firstCenterX, top: firstCenterY, height: lineHeight, progressHeight: clampedProgress });
     };
 
     updateLineMetrics();
