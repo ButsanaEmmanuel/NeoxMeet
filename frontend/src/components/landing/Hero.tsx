@@ -81,7 +81,7 @@ export function Hero() {
               ))}
             </div>
             <div className="flex flex-wrap items-center gap-3 text-xs text-white/55">
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-white/70">99,9% uptime</span>
+              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-white/70">99,9 % uptime</span>
               <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-white/70">SOC2 en cours</span>
             </div>
           </div>

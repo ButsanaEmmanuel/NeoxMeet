@@ -20,7 +20,7 @@ const highlights = [
   },
   {
     label: 'Security',
-    title: 'Disponibilité 99,9%',
+    title: 'Disponibilité 99,9 %',
     description: 'Flux stables partout où vos équipes se connectent.',
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -108,7 +108,7 @@ export default function Home() {
                 Voir une démo 20s
                 <ArrowIcon />
               </a>
-              <p className="text-[13px] font-medium text-slate-500">Aucune carte requise • Démo en 24h</p>
+              <p className="text-[13px] font-medium text-slate-500">Aucune carte requise • Démo en 24 h</p>
               <TrustStrip />
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="relative overflow-hidden rounded-2xl border border-indigo-100/80 bg-gradient-to-br from-indigo-50 via-white to-sky-50 p-5 text-sm text-indigo-900 shadow-sm shadow-indigo-100">
@@ -116,7 +116,7 @@ export default function Home() {
                   <div className="relative space-y-1">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-indigo-600">Fiabilité</p>
                     <p className="text-2xl font-semibold">SLA premium</p>
-                    <p className="text-indigo-800">99,9% garanti • Support 24/7</p>
+                    <p className="text-indigo-800">99,9 % garanti • Support 24/7</p>
                   </div>
                 </div>
                 <div className="relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white/80 p-5 text-sm text-slate-900 shadow-sm shadow-indigo-100 backdrop-blur">
@@ -159,7 +159,7 @@ export default function Home() {
                             <p>Décisions et actions listées en temps réel.</p>
                           </div>
                           <span className="ml-auto rounded-full border border-cyan-200/70 bg-cyan-50 px-3 py-1 text-[11px] font-semibold text-cyan-700 shadow-sm">
-                            Traduction live • Transcription
+                            Traduction en direct • Transcription
                           </span>
                         </div>
                       </div>
@@ -183,10 +183,10 @@ export default function Home() {
                       </div>
                       <div className="overflow-hidden rounded-2xl border border-indigo-100/80 bg-gradient-to-r from-indigo-50 via-sky-50 to-cyan-50 p-4 shadow-sm">
                         <div className="flex flex-wrap items-center gap-2">
-                          <div className="flex items-center gap-2 rounded-full bg-slate-900 px-3 py-2 text-[11px] font-semibold text-cyan-300 shadow-sm">
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden />
-                            Traduction live
-                          </div>
+                            <div className="flex items-center gap-2 rounded-full bg-slate-900 px-3 py-2 text-[11px] font-semibold text-cyan-300 shadow-sm">
+                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden />
+                              Traduction en direct
+                            </div>
                           <span className="rounded-full border border-slate-200/70 bg-white/80 px-3 py-2 text-[11px] font-semibold text-slate-800 shadow-sm">
                             Transcription
                           </span>

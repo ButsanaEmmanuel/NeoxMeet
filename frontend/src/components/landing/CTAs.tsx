@@ -161,7 +161,7 @@ export function HeaderCTA({ children, href, className, ...props }: ActionProps) 
       <a
         href={href}
         className={cn(
-          'h-10 rounded-full px-5 font-semibold border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 transition inline-flex items-center justify-center',
+          'h-10 rounded-full px-5 font-medium border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 transition inline-flex items-center justify-center dark:border-white/10 dark:bg-slate-900/40 dark:text-slate-100 dark:hover:bg-white/5',
           className,
         )}
         {...props}
@@ -175,7 +175,7 @@ export function HeaderCTA({ children, href, className, ...props }: ActionProps) 
     <button
       type="button"
       className={cn(
-        'h-10 rounded-full px-5 font-semibold border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 transition inline-flex items-center justify-center',
+        'h-10 rounded-full px-5 font-medium border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 transition inline-flex items-center justify-center dark:border-white/10 dark:bg-slate-900/40 dark:text-slate-100 dark:hover:bg-white/5',
         className,
       )}
       {...props}
