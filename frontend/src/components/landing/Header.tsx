@@ -6,10 +6,8 @@ import { cn } from '../../lib/utils';
 
 const links = [
   { label: 'Produit', href: '#product' },
-  { label: 'Fiabilité', href: '#reliability' },
   { label: 'Sécurité', href: '#security' },
   { label: 'Tarifs', href: '#pricing' },
-  { label: 'Contact', href: '#contact' },
 ];
 
 export function Header() {
@@ -87,6 +85,9 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <div className="rounded-full border border-slate-200/70 bg-white/80 px-3 py-1 text-[11px] font-semibold text-sky-700 shadow-sm backdrop-blur">
+            99.9% uptime
+          </div>
           <a className="text-sm font-medium text-slate-600 transition hover:text-slate-900" href="/login">
             Connexion
           </a>
@@ -97,7 +98,7 @@ export function Header() {
             Lancer une réunion
           </a>
           <a
-            className="rounded-full bg-gradient-to-r from-indigo-600 to-sky-500 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-300/50 transition hover:shadow-indigo-300"
+            className="button-shine rounded-full bg-gradient-to-r from-indigo-600 via-sky-600 to-cyan-500 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-300/50 transition hover:shadow-indigo-300"
             href="/register"
           >
             Réserver une démo
@@ -143,13 +144,16 @@ export function Header() {
               ))}
             </div>
             <div className="mt-auto flex flex-col gap-3 text-sm">
+              <div className="rounded-full border border-slate-200/70 bg-white/80 px-3 py-2 text-center text-[12px] font-semibold text-sky-700">
+                99.9% uptime
+              </div>
               <a className="rounded-full border border-slate-200 px-4 py-2 text-center" href="/login">
                 Connexion
               </a>
               <a className="rounded-full border border-slate-200 px-4 py-2 text-center" href="/dashboard">
                 Lancer une réunion
               </a>
-              <a className="rounded-full bg-gradient-to-r from-indigo-600 to-sky-500 px-4 py-2 text-center font-semibold text-white" href="/register">
+              <a className="button-shine rounded-full bg-gradient-to-r from-indigo-600 via-sky-600 to-cyan-500 px-4 py-2 text-center font-semibold text-white" href="/register">
                 Réserver une démo
               </a>
             </div>
