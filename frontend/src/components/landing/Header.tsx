@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '../../lib/utils';
-import { HeaderCTA } from './CTAs';
+import { HeaderCTA, OutlineCTA } from './CTAs';
 
 const links = [
   { label: 'Produit', href: '#product' },
@@ -92,12 +92,9 @@ export function Header() {
           <a className="text-sm font-medium text-slate-600 transition hover:text-slate-900" href="/login">
             Connexion
           </a>
-          <a
-            className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:-translate-y-0.5 hover:border-indigo-200 hover:text-indigo-700"
-            href="/dashboard"
-          >
+          <OutlineCTA href="/dashboard" className="text-sm">
             Lancer une réunion
-          </a>
+          </OutlineCTA>
           <HeaderCTA href="/register">Réserver une démo</HeaderCTA>
         </div>
 
@@ -146,9 +143,9 @@ export function Header() {
               <a className="rounded-full border border-slate-200 px-4 py-2 text-center" href="/login">
                 Connexion
               </a>
-              <a className="rounded-full border border-slate-200 px-4 py-2 text-center" href="/dashboard">
+              <OutlineCTA href="/dashboard" className="w-full justify-center">
                 Lancer une réunion
-              </a>
+              </OutlineCTA>
               <HeaderCTA href="/register" className="h-auto py-2 text-center">
                 Réserver une démo
               </HeaderCTA>

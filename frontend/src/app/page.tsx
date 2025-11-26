@@ -1,6 +1,6 @@
 import { Footer } from '../components/landing/Footer';
 import { Header } from '../components/landing/Header';
-import { PrimaryCTA, TrustStrip } from '../components/landing/CTAs';
+import { OutlineCTA, PrimaryCTA, TrustStrip } from '../components/landing/CTAs';
 
 const highlights = [
   {
@@ -97,12 +97,9 @@ export default function Home() {
                   Réserver une démo
                   <ArrowIcon />
                 </PrimaryCTA>
-                <a
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 px-5 py-3 text-sm font-semibold text-slate-900 transition hover:-translate-y-0.5 hover:border-indigo-200/80 hover:text-indigo-800"
-                  href="/dashboard"
-                >
+                <OutlineCTA href="/dashboard" className="gap-2 text-sm">
                   Lancer une réunion
-                </a>
+                </OutlineCTA>
               </div>
               <a
                 className="inline-flex items-center gap-2 text-sm font-semibold text-slate-800 transition hover:text-indigo-700"
