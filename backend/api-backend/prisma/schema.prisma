@@ -25,36 +25,46 @@ model Room {
   owner           User              @relation(fields: [ownerId], references: [id])
   meetingSessions MeetingSession[]
   createdAt       DateTime          @default(now())
+
+  @@index([ownerId])
 }
 
 model MeetingSession {
   id                 String              @id @default(uuid())
   roomId             String
-  room               Room                @relation(fields: [roomId], references: [id])
-  startedAt          DateTime
+  room               Room                @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  startedAt          DateTime            @default(now())
   endedAt            DateTime?
   transcriptSegments TranscriptSegment[]
   transcriptArtifact TranscriptArtifact?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([roomId])
 }
 
 model TranscriptSegment {
   id                String   @id @default(uuid())
   meetingSessionId  String
-  meetingSession    MeetingSession @relation(fields: [meetingSessionId], references: [id])
+  meetingSession    MeetingSession @relation(fields: [meetingSessionId], references: [id], onDelete: Cascade)
   speakerIdentity   String?
   lang              String
   startMs           Int
   endMs             Int
-  text              String
+  text              String   @db.Text
   createdAt         DateTime @default(now())
+
+  @@index([meetingSessionId])
+  @@index([meetingSessionId, startMs])
 }
 
 model TranscriptArtifact {
   id               String   @id @default(uuid())
   meetingSessionId String   @unique
-  meetingSession   MeetingSession @relation(fields: [meetingSessionId], references: [id])
-  cleanedTranscript String
-  summary          String
+  meetingSession   MeetingSession @relation(fields: [meetingSessionId], references: [id], onDelete: Cascade)
+  cleanedTranscript String   @db.Text
+  summary          String   @db.Text
   decisions        Json
   actionItems      Json
   createdAt        DateTime @default(now())
