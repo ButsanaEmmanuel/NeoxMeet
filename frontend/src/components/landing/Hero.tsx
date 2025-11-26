@@ -66,7 +66,7 @@ export function Hero() {
               <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/90 transition group-hover:border-white/40 group-hover:bg-white/10">
                 ▶
               </span>
-              Voir une démo 20s
+              Voir une démo 20 s
             </a>
           </div>
           <div className="flex flex-wrap items-center gap-6 text-sm text-white/60">
