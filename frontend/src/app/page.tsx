@@ -111,14 +111,15 @@ export default function Home() {
                 Voir une démo 20s
                 <ArrowIcon />
               </a>
+              <p className="text-[13px] font-medium text-slate-500">Aucune carte requise • Démo en 24h</p>
               <TrustStrip />
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="relative overflow-hidden rounded-2xl border border-indigo-100/80 bg-gradient-to-br from-indigo-50 via-white to-sky-50 p-5 text-sm text-indigo-900 shadow-sm shadow-indigo-100">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.18),transparent_45%)]" aria-hidden />
                   <div className="relative space-y-1">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-indigo-600">Disponibilité 99,9%</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-indigo-600">Fiabilité</p>
                     <p className="text-2xl font-semibold">SLA premium</p>
-                    <p className="text-indigo-800">Flux stables et support 24/7.</p>
+                    <p className="text-indigo-800">99,9% garanti • Support 24/7</p>
                   </div>
                 </div>
                 <div className="relative overflow-hidden rounded-2xl border border-slate-200/70 bg-white/80 p-5 text-sm text-slate-900 shadow-sm shadow-indigo-100 backdrop-blur">
@@ -184,7 +185,7 @@ export default function Home() {
                         </div>
                       </div>
                       <div className="overflow-hidden rounded-2xl border border-indigo-100/80 bg-gradient-to-r from-indigo-50 via-sky-50 to-cyan-50 p-4 shadow-sm">
-                        <div className="flex flex-wrap items-start gap-3">
+                        <div className="flex flex-wrap items-center gap-2">
                           <div className="flex items-center gap-2 rounded-full bg-slate-900 px-3 py-2 text-[11px] font-semibold text-cyan-300 shadow-sm">
                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden />
                             Traduction live
@@ -192,7 +193,10 @@ export default function Home() {
                           <span className="rounded-full border border-slate-200/70 bg-white/80 px-3 py-2 text-[11px] font-semibold text-slate-800 shadow-sm">
                             Transcription
                           </span>
-                          <button className="text-xs font-semibold text-indigo-700 underline-offset-4 transition hover:text-indigo-800 hover:underline">
+                          <button
+                            className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white/70 px-3 py-2 text-[11px] font-semibold text-slate-700 shadow-[0_12px_36px_-22px_rgba(15,23,42,0.4)] transition hover:-translate-y-0.5 hover:border-indigo-100 hover:bg-white/90 hover:shadow-[0_20px_40px_-24px_rgba(79,70,229,0.3)] focus:outline-none focus:ring-2 focus:ring-indigo-100"
+                            type="button"
+                          >
                             Basculer
                           </button>
                         </div>

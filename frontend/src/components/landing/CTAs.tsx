@@ -3,20 +3,69 @@ import { cn } from '../../lib/utils';
 
 export function TrustStrip() {
   const items = [
-    'Chiffrement',
-    'Rôles & SSO',
-    'Journal d’audit (Enterprise)',
+    {
+      label: 'Chiffrement',
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          className="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+        >
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" strokeLinecap="round" />
+          <rect x="5.5" y="11" width="13" height="8.5" rx="2" />
+          <path d="M12 14.5v1.5" strokeLinecap="round" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Rôles & SSO',
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          className="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+        >
+          <path
+            d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path d="M4.5 19.5c.7-2.3 3.5-3.5 7.5-3.5s6.8 1.2 7.5 3.5" strokeLinecap="round" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Journal d’audit (Enterprise)',
+      icon: (
+        <svg
+          viewBox="0 0 24 24"
+          className="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+        >
+          <path d="M8 4h9l2 2v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" />
+          <path d="M14 4v4h4" strokeLinejoin="round" />
+          <path d="M9.5 12.5H15" strokeLinecap="round" />
+          <path d="M9.5 15.5h3" strokeLinecap="round" />
+        </svg>
+      ),
+    },
   ];
 
   return (
-    <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-slate-600">
-      {items.map((t) => (
+    <div className="mt-5 flex flex-wrap items-center gap-3 text-[13px] text-slate-700">
+      {items.map((item) => (
         <span
-          key={t}
-          className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 backdrop-blur"
+          key={item.label}
+          className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-3.5 py-2 text-slate-700 shadow-[0_14px_36px_-26px_rgba(15,23,42,0.28)] backdrop-blur transition hover:border-indigo-100 hover:shadow-[0_18px_46px_-28px_rgba(79,70,229,0.32)]"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-          {t}
+          <span className="text-slate-500">{item.icon}</span>
+          {item.label}
         </span>
       ))}
     </div>
