@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const steps = [
   {
@@ -37,14 +37,48 @@ export function HowItWorksSection() {
   const transitionTimerRef = useRef<NodeJS.Timeout | null>(null);
   const enterTimerRef = useRef<NodeJS.Timeout | null>(null);
   const rafRef = useRef<number | null>(null);
+  const badgeRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const stepperCardRef = useRef<HTMLDivElement | null>(null);
+  const [lineMetrics, setLineMetrics] = useState({
+    left: 32,
+    top: 24,
+    height: 0,
+    progressHeight: 0,
+  });
 
   useEffect(() => () => toastTimer && clearTimeout(toastTimer), [toastTimer]);
 
-  const filledHeight = useMemo(() => {
-    const index = steps.findIndex((step) => step.id === activeStep);
-    if (index <= 0) return '0%';
-    const segments = steps.length - 1;
-    return `${(index / segments) * 100}%`;
+  useEffect(() => {
+    const updateLineMetrics = () => {
+      const card = stepperCardRef.current;
+      const badges = badgeRefs.current;
+
+      if (!card || badges.length < 1 || !badges[0] || !badges[badges.length - 1]) return;
+
+      const cardRect = card.getBoundingClientRect();
+      const firstRect = badges[0].getBoundingClientRect();
+      const lastRect = badges[badges.length - 1].getBoundingClientRect();
+
+      const centerX = firstRect.left + firstRect.width / 2 - cardRect.left;
+      const top = firstRect.top + firstRect.height / 2 - cardRect.top;
+      const height = lastRect.top + lastRect.height / 2 - cardRect.top - top;
+
+      const activeIndex = steps.findIndex((step) => step.id === activeStep);
+      const activeBadge = badges[activeIndex];
+      const activeRect = activeBadge?.getBoundingClientRect();
+
+      const activeHeight = activeRect ? activeRect.top + activeRect.height / 2 - cardRect.top - top : 0;
+      const clampedProgress = Math.max(0, Math.min(height, activeHeight));
+
+      setLineMetrics({ left: centerX, top, height, progressHeight: clampedProgress });
+    };
+
+    updateLineMetrics();
+    window.addEventListener('resize', updateLineMetrics);
+
+    return () => {
+      window.removeEventListener('resize', updateLineMetrics);
+    };
   }, [activeStep]);
 
   const handleCopy = () => {
@@ -130,12 +164,23 @@ export function HowItWorksSection() {
         </div>
 
         <div className="order-2 lg:order-1 lg:col-span-5 space-y-5">
-          <div className="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white/70 p-[18px] shadow-lg shadow-slate-200/40 backdrop-blur dark:border-white/10 dark:bg-[rgba(15,23,42,0.45)] dark:shadow-black/20">
-            <div className="pointer-events-none absolute left-6 top-[18px] bottom-[18px] w-px" aria-hidden>
+          <div
+            ref={stepperCardRef}
+            className="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white/70 p-[18px] shadow-lg shadow-slate-200/40 backdrop-blur dark:border-white/10 dark:bg-[rgba(15,23,42,0.45)] dark:shadow-black/20"
+          >
+            <div
+              className="pointer-events-none absolute w-px"
+              aria-hidden
+              style={{
+                left: `${lineMetrics.left}px`,
+                top: `${lineMetrics.top}px`,
+                height: `${lineMetrics.height}px`,
+              }}
+            >
               <div className="h-full w-px bg-slate-200" />
               <div
                 className="absolute left-0 top-0 w-px rounded-full bg-gradient-to-b from-indigo-500 via-violet-500 to-cyan-400"
-                style={{ height: filledHeight }}
+                style={{ height: `${lineMetrics.progressHeight}px` }}
               />
             </div>
             <div className="space-y-2" role="tablist" aria-label="Étapes de Comment ça marche">
@@ -155,6 +200,9 @@ export function HowItWorksSection() {
                     }`}
                   >
                     <span
+                      ref={(el) => {
+                        badgeRefs.current[step.id - 1] = el;
+                      }}
                       className={`mt-0.5 inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold transition ${
                         active
                           ? 'bg-indigo-600 text-white shadow-sm'
