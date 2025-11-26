@@ -58,6 +58,20 @@ a {
   opacity: 0.7;
 }
 
+.ai-orb {
+  position: absolute;
+  inset: 8% 0 8% 32%;
+  z-index: 0;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, rgba(92, 196, 255, 0.45), transparent 40%),
+    radial-gradient(circle at 70% 40%, rgba(62, 240, 255, 0.35), transparent 40%),
+    radial-gradient(circle at 50% 70%, rgba(166, 121, 255, 0.45), transparent 45%);
+  filter: blur(60px);
+  opacity: 0.12;
+  animation: orbPulse 9s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
 @keyframes captionFlow {
   0% {
     opacity: 0;
@@ -116,6 +130,18 @@ a {
   animation: pulseHalo 8s ease-in-out infinite;
 }
 
+@keyframes orbPulse {
+  0% {
+    transform: scale(0.98) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.02) translate3d(0, -4px, 0);
+  }
+  100% {
+    transform: scale(0.98) translate3d(0, 0, 0);
+  }
+}
+
 .button-shine {
   position: relative;
   overflow: hidden;
@@ -132,4 +158,23 @@ a {
 
 .button-shine:hover::after {
   transform: translateX(120%);
+}
+
+.chip-soft {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.35rem 0.85rem;
+  box-shadow: 0 20px 40px rgba(5, 8, 18, 0.45);
+  backdrop-filter: blur(6px);
+  transition: transform 250ms ease, border-color 250ms ease, background 250ms ease;
+}
+
+.chip-soft:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.32);
+  background: rgba(255, 255, 255, 0.12);
 }
