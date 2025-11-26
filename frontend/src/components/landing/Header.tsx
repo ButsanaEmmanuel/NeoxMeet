@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '../../lib/utils';
+import { HeaderCTA } from './CTAs';
 
 const links = [
   { label: 'Produit', href: '#product' },
@@ -86,7 +87,7 @@ export function Header() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <div className="rounded-full border border-slate-200/70 bg-white/80 px-3 py-1 text-[11px] font-semibold text-sky-700 shadow-sm backdrop-blur">
-            99.9% uptime
+            Disponibilité 99,9%
           </div>
           <a className="text-sm font-medium text-slate-600 transition hover:text-slate-900" href="/login">
             Connexion
@@ -97,12 +98,7 @@ export function Header() {
           >
             Lancer une réunion
           </a>
-          <a
-            className="button-shine rounded-full bg-gradient-to-r from-indigo-600 via-sky-600 to-cyan-500 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-300/50 transition hover:shadow-indigo-300"
-            href="/register"
-          >
-            Réserver une démo
-          </a>
+          <HeaderCTA href="/register">Réserver une démo</HeaderCTA>
         </div>
 
         <button
@@ -145,7 +141,7 @@ export function Header() {
             </div>
             <div className="mt-auto flex flex-col gap-3 text-sm">
               <div className="rounded-full border border-slate-200/70 bg-white/80 px-3 py-2 text-center text-[12px] font-semibold text-sky-700">
-                99.9% uptime
+                Disponibilité 99,9%
               </div>
               <a className="rounded-full border border-slate-200 px-4 py-2 text-center" href="/login">
                 Connexion
@@ -153,9 +149,9 @@ export function Header() {
               <a className="rounded-full border border-slate-200 px-4 py-2 text-center" href="/dashboard">
                 Lancer une réunion
               </a>
-              <a className="button-shine rounded-full bg-gradient-to-r from-indigo-600 via-sky-600 to-cyan-500 px-4 py-2 text-center font-semibold text-white" href="/register">
+              <HeaderCTA href="/register" className="h-auto py-2 text-center">
                 Réserver une démo
-              </a>
+              </HeaderCTA>
             </div>
           </div>
         </div>
