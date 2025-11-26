@@ -133,17 +133,17 @@ export default function DashboardPage() {
     : fallbackRecent;
 
   return (
-    <div className="relative -mx-6 -mt-10 min-h-screen px-6 pb-12 pt-10 text-white">
-      <div className="absolute inset-0 -z-10 bg-[#04060d]" />
+    <div className="relative min-h-screen overflow-hidden bg-[#04060d] px-4 pb-12 pt-10 text-white sm:px-6 lg:px-8">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-cyan-500/15 via-transparent to-violet-600/10 blur-3xl" />
       <div
-        className="absolute inset-0 -z-10 opacity-80"
+        className="absolute inset-0 -z-20 opacity-80"
         style={{
           backgroundImage:
             'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0), linear-gradient(120deg, rgba(12,29,63,0.6), transparent 55%)',
           backgroundSize: '70px 70px, 100% 100%',
         }}
       />
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-cyan-500/15 via-transparent to-violet-600/10 blur-3xl" />
+      <div className="absolute inset-0 -z-30 bg-[#04060d]" />
 
       <div className="relative mx-auto max-w-6xl space-y-8">
         <header className="sticky top-4 z-20 rounded-3xl border border-white/10 bg-black/40 px-6 py-4 shadow-2xl shadow-black/40 backdrop-blur-xl">
