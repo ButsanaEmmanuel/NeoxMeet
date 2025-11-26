@@ -126,13 +126,14 @@ export function HowItWorksSection() {
         </div>
 
         <div className="order-2 lg:order-1 lg:col-span-5 space-y-5">
-          <div className="relative rounded-[24px] border border-slate-200 bg-white/70 p-[18px] shadow-lg shadow-slate-200/40 backdrop-blur dark:border-white/10 dark:bg-[rgba(15,23,42,0.45)] dark:shadow-black/20">
-            <div className="absolute left-4 top-4 bottom-4 w-[2px] bg-slate-200" aria-hidden />
-            <div
-              className="absolute left-4 top-4 w-[2px] rounded-full bg-gradient-to-b from-indigo-500 via-violet-500 to-cyan-400"
-              style={{ height: filledHeight }}
-              aria-hidden
-            />
+          <div className="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white/70 p-[18px] shadow-lg shadow-slate-200/40 backdrop-blur dark:border-white/10 dark:bg-[rgba(15,23,42,0.45)] dark:shadow-black/20">
+            <div className="pointer-events-none absolute left-6 top-6 bottom-6 w-px" aria-hidden>
+              <div className="h-full w-px bg-slate-200" />
+              <div
+                className="absolute left-0 top-0 w-px rounded-full bg-gradient-to-b from-indigo-500 via-violet-500 to-cyan-400"
+                style={{ height: filledHeight }}
+              />
+            </div>
             <div className="space-y-2" role="tablist" aria-label="Étapes de Comment ça marche">
               {steps.map((step) => {
                 const active = isActive(step.id);
