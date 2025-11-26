@@ -102,13 +102,13 @@ export default function Home() {
                   Lancer une réunion
                 </OutlineCTA>
               </div>
-              <a
-                className="inline-flex items-center gap-2 text-sm font-semibold text-slate-800 transition hover:text-indigo-700"
-                href="/demo"
-              >
-                Voir une démo 20s
-                <ArrowIcon />
-              </a>
+            <a
+              className="inline-flex items-center gap-2 text-sm font-semibold text-slate-800 transition hover:text-indigo-700"
+              href="/demo"
+            >
+              Voir une démo 20 s
+              <ArrowIcon />
+            </a>
               <p className="text-[13px] font-medium text-slate-500">Aucune carte requise • Démo en 24 h</p>
               <TrustStrip />
               <div className="grid gap-3 sm:grid-cols-2">

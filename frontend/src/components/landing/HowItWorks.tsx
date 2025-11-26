@@ -26,7 +26,7 @@ const steps = [
   },
 ];
 
-type TransitionState = 'idle' | 'fading-out' | 'fading-in';
+type TransitionState = 'idle' | 'fading-out' | 'fading-in' | 'settling';
 
 export function HowItWorksSection() {
   const [activeStep, setActiveStep] = useState<number>(1);
@@ -35,6 +35,7 @@ export function HowItWorksSection() {
   const [showToast, setShowToast] = useState(false);
   const [toastTimer, setToastTimer] = useState<NodeJS.Timeout | null>(null);
   const transitionTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const enterTimerRef = useRef<NodeJS.Timeout | null>(null);
   const rafRef = useRef<number | null>(null);
 
   useEffect(() => () => toastTimer && clearTimeout(toastTimer), [toastTimer]);
@@ -63,19 +64,22 @@ export function HowItWorksSection() {
     setTransitionState('fading-out');
 
     if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
+    if (enterTimerRef.current) clearTimeout(enterTimerRef.current);
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
 
     transitionTimerRef.current = setTimeout(() => {
       setDisplayedStep(stepId);
       setTransitionState('fading-in');
 
-      rafRef.current = requestAnimationFrame(() => setTransitionState('idle'));
+      rafRef.current = requestAnimationFrame(() => setTransitionState('settling'));
+      enterTimerRef.current = setTimeout(() => setTransitionState('idle'), 200);
     }, 120);
   };
 
   useEffect(
     () => () => {
       if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
+      if (enterTimerRef.current) clearTimeout(enterTimerRef.current);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     },
     [],
@@ -127,7 +131,7 @@ export function HowItWorksSection() {
 
         <div className="order-2 lg:order-1 lg:col-span-5 space-y-5">
           <div className="relative overflow-hidden rounded-[24px] border border-slate-200 bg-white/70 p-[18px] shadow-lg shadow-slate-200/40 backdrop-blur dark:border-white/10 dark:bg-[rgba(15,23,42,0.45)] dark:shadow-black/20">
-            <div className="pointer-events-none absolute left-6 top-6 bottom-6 w-px" aria-hidden>
+            <div className="pointer-events-none absolute left-6 top-[18px] bottom-[18px] w-px" aria-hidden>
               <div className="h-full w-px bg-slate-200" />
               <div
                 className="absolute left-0 top-0 w-px rounded-full bg-gradient-to-b from-indigo-500 via-violet-500 to-cyan-400"
@@ -144,7 +148,7 @@ export function HowItWorksSection() {
                     onClick={() => handleStepChange(step.id)}
                     aria-selected={active}
                     role="tab"
-                    className={`group relative flex w-full items-start gap-4 rounded-2xl border px-4 py-4 text-left transition hover:border-indigo-100 hover:bg-indigo-50/50 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:hover:border-indigo-300/20 dark:hover:bg-white/5 ${
+                    className={`group relative flex w-full items-start gap-4 rounded-2xl border px-4 py-4 text-left transition hover:-translate-y-0.5 hover:border-slate-200 hover:bg-slate-50 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:hover:border-indigo-300/20 dark:hover:bg-white/5 dark:focus-visible:ring-indigo-300/40 dark:focus-visible:ring-offset-transparent ${
                       active
                         ? 'bg-gradient-to-r from-indigo-50 via-violet-50 to-cyan-50 border-indigo-200 shadow-sm dark:from-indigo-950/50 dark:via-violet-950/50 dark:to-cyan-950/50 dark:border-indigo-300/40'
                         : 'border-transparent'
@@ -161,23 +165,19 @@ export function HowItWorksSection() {
                     </span>
                     <div className="space-y-2">
                       <p className={`text-base font-semibold ${active ? 'text-slate-900 dark:text-slate-100' : 'text-slate-800 dark:text-slate-100'}`}>
-                        {step.title}
-                      </p>
-                      <p className="text-sm text-slate-600 dark:text-slate-300">{step.description}</p>
-                      <div className="flex flex-wrap gap-2">
-                        {step.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className={`inline-flex items-center rounded-full border px-3 py-1 text-[12px] font-medium transition ${
-                              active
-                                ? 'border-indigo-100 bg-white/90 text-indigo-700 shadow-sm dark:border-indigo-200/30 dark:bg-indigo-900/30 dark:text-indigo-100'
-                                : 'border-slate-200 bg-white/70 text-slate-700 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-slate-200'
-                            }`}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
+                      {step.title}
+                    </p>
+                    <p className="text-sm text-slate-600 dark:text-slate-300">{step.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {step.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-[12px] font-medium text-slate-700 shadow-sm transition dark:border-white/10 dark:bg-white/5 dark:text-slate-200"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                     </div>
                     <span
                       className={`absolute left-0 top-0 h-full w-[2px] rounded-full ${
