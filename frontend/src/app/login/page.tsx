@@ -137,12 +137,12 @@ export default function LoginPage() {
             <div className="w-full lg:max-w-lg">
               <div className="rounded-2xl border border-slate-200 bg-white shadow-lg">
                 <div className="space-y-6 p-8">
-                <div className="space-y-1">
-                  <h1 className="text-3xl font-semibold text-slate-900">Sign in</h1>
-                  <p className="text-sm text-slate-600">Fast, secure access to NeoxMeet.</p>
-                </div>
+                  <div className="space-y-1">
+                    <h1 className="text-3xl font-semibold text-slate-900">Sign in</h1>
+                    <p className="text-sm text-slate-600">Fast, secure access to NeoxMeet.</p>
+                  </div>
 
-                <div className="space-y-3">
+                  <div className="space-y-3">
                   {socialProviders.map((provider) => (
                     <button
                       key={provider.name}
@@ -340,6 +340,7 @@ export default function LoginPage() {
               </div>
             </div>
           </aside>
+        </div>
         </div>
       </section>
 
