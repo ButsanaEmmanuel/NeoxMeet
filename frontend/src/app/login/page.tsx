@@ -143,17 +143,19 @@ export default function LoginPage() {
                   </div>
 
                   <div className="space-y-3">
-                  {socialProviders.map((provider) => (
-                    <button
-                      type="button"
-                      className="flex w-full items-center justify-between gap-3 rounded-xl border border-indigo-100 bg-indigo-50 px-4 py-3 text-sm font-semibold text-indigo-800 shadow-sm transition hover:border-indigo-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
-                    >
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-base font-bold text-indigo-700 ring-1 ring-slate-100">
-                        ↗
-                      </span>
-                      <span className="flex-1 text-center">Use work SSO</span>
-                      <span className="text-xs text-indigo-600">SAML / OIDC</span>
-                    </button>
+                    {socialProviders.map((provider) => (
+                      <button
+                        key={provider.label}
+                        type="button"
+                        className="flex w-full items-center justify-between gap-3 rounded-xl border border-indigo-100 bg-indigo-50 px-4 py-3 text-sm font-semibold text-indigo-800 shadow-sm transition hover:border-indigo-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                      >
+                        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-base font-bold text-indigo-700 ring-1 ring-slate-100">
+                          ↗
+                        </span>
+                        <span className="flex-1 text-center">Use work SSO</span>
+                        <span className="text-xs text-indigo-600">SAML / OIDC</span>
+                      </button>
+                    ))}
                   </div>
 
                   <p className="text-xs text-slate-500">We never share your calendar or contacts without permission.</p>
