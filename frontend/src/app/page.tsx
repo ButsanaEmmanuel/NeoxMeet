@@ -3,6 +3,7 @@ import { Header } from '../components/landing/Header';
 import { OutlineCTA, PrimaryCTA, TrustStrip } from '../components/landing/CTAs';
 import { HowItWorksSection } from '../components/landing/HowItWorks';
 import { LiveTranslationSection } from '../components/landing/LiveTranslationSection';
+import { SmartRecapSection } from '../components/landing/SmartRecapSection';
 
 const highlights = [
   {
@@ -272,6 +273,10 @@ export default function Home() {
 
             <LiveTranslationSection />
           </section>
+
+          <div className="mt-16">
+            <SmartRecapSection />
+          </div>
 
           <section className="rounded-[24px] bg-white/85 p-6 shadow-[0_30px_80px_-48px_rgba(51,65,85,0.35)] backdrop-blur-lg">
             <div className="grid gap-4 sm:grid-cols-3">
