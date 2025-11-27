@@ -133,17 +133,19 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
   }, [render, onClose]);
 
   useEffect(() => {
-    if (resendTimer <= 0) return;
-    const interval = setInterval(() => setResendTimer((time) => Math.max(0, time - 1)), 1000);
-    return () => clearInterval(interval);
-  }, [resendTimer]);
-
-  useEffect(() => {
     setStatus('idle');
     setUsePassword(false);
     setError(null);
     setResendTimer(0);
   }, [mode]);
+
+  useEffect(() => {
+    if (resendTimer <= 0) return;
+    const interval = setInterval(() => {
+      setResendTimer((timer) => (timer > 0 ? timer - 1 : 0));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [resendTimer]);
 
   useEffect(() => {
     if (!render) {
@@ -222,33 +224,37 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
         aria-modal="true"
         aria-labelledby="auth-modal-title"
         className={cn(
-          'relative w-full max-w-[480px] overflow-hidden rounded-[26px] border border-slate-200/70 bg-white/80 p-7 shadow-[0_26px_90px_-40px_rgba(15,23,42,0.55)] backdrop-blur-xl',
-          'transition-all duration-200',
+          'relative w-full max-w-[520px] overflow-hidden rounded-[28px] border border-slate-200/80 bg-white/85 p-8 shadow-[0_26px_90px_-40px_rgba(15,23,42,0.55)] backdrop-blur-xl',
+          'transition-all duration-200 max-h-[90vh] overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-200/80 dark:scrollbar-thumb-white/15',
           visible ? 'scale-100 opacity-100' : 'scale-[0.98] opacity-0',
-          'dark:border-white/10 dark:bg-slate-900/85 dark:text-slate-100',
+          'dark:border-white/12 dark:bg-slate-900/80 dark:text-slate-100',
         )}
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="space-y-6">
-          <div className="flex items-start justify-between gap-4">
-            <div className="space-y-3">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-indigo-600 dark:text-indigo-300">ACCÈS SÉCURISÉ</p>
-              <div className="space-y-1">
-                <h2 id="auth-modal-title" className="text-2xl font-semibold text-slate-900 dark:text-slate-50">
+        <div className="space-y-8">
+          <div className="flex items-start justify-between gap-6">
+            <div className="space-y-3 pr-4">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-500 dark:text-indigo-300">ACCÈS SÉCURISÉ</p>
+              <div className="space-y-2">
+                <h2 id="auth-modal-title" className="text-3xl font-semibold text-slate-900 dark:text-white">
                   {mode === 'login' ? 'Se connecter' : 'Créer votre compte'}
                 </h2>
                 <p className="text-sm text-slate-600 dark:text-slate-300">
                   {mode === 'login'
-                    ? 'Accès rapide à vos réunions et recaps.'
+                    ? 'Accédez à vos réunions en un clin d’œil.'
                     : 'Démarrez en quelques secondes. Aucune carte requise.'}
                 </p>
               </div>
-              <p className="text-xs font-semibold text-slate-500 dark:text-slate-300">
-                Sessions chiffrées • Protection anti-abuse • Connexion rapide
-              </p>
+              <div className="flex flex-wrap items-center gap-2 text-[13px] font-medium text-slate-500 dark:text-slate-300">
+                <span>Sessions chiffrées</span>
+                <span className="text-slate-300 dark:text-white/40">•</span>
+                <span>Anti-abuse</span>
+                <span className="text-slate-300 dark:text-white/40">•</span>
+                <span>Connexion rapide</span>
+              </div>
             </div>
             <button
-              className="mt-1 inline-flex h-9 w-9 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100/70 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:text-slate-200 dark:hover:bg-white/5"
+              className="mt-1 inline-flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-100/80 hover:text-slate-800 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:text-slate-200 dark:hover:bg-white/10 dark:focus-visible:ring-offset-slate-900"
               onClick={onClose}
               aria-label="Fermer"
               type="button"
@@ -262,42 +268,44 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
               <button
                 key={label}
                 type="button"
-                className="group flex h-12 w-full items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/95 px-3 text-[15px] font-semibold text-slate-800 shadow-sm shadow-slate-200/70 transition hover:-translate-y-[2px] hover:border-indigo-200 hover:bg-indigo-50/60 hover:shadow-lg hover:shadow-indigo-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:border-white/10 dark:bg-slate-800/70 dark:text-slate-100 dark:shadow-none dark:hover:border-indigo-400/40 dark:hover:bg-slate-800"
+                className="group relative flex h-12 w-full items-center justify-center overflow-hidden rounded-2xl border border-slate-200/85 bg-white/95 text-[15px] font-semibold text-slate-800 shadow-sm shadow-slate-200/70 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:ring-offset-1 focus-visible:ring-offset-white hover:-translate-y-[2px] hover:border-indigo-200 hover:shadow-lg hover:shadow-indigo-100 active:translate-y-[1px] dark:border-white/12 dark:bg-slate-900/60 dark:text-slate-100 dark:shadow-none dark:hover:border-indigo-400/40 dark:hover:bg-slate-900"
               >
-                <span className="flex w-10 items-center justify-center text-slate-500 group-hover:text-slate-700 dark:text-slate-200">
+                <span className="flex h-full w-11 shrink-0 items-center justify-center border-r border-transparent text-slate-500 transition group-hover:text-slate-700 dark:text-slate-200">
                   <Icon />
                 </span>
-                <span className="flex-1 text-center leading-none">{label}</span>
+                <span className="pointer-events-none absolute inset-0 flex items-center justify-center px-12 text-center leading-none">
+                  {label}
+                </span>
               </button>
             ))}
-            <div className="flex items-center gap-3 py-3 text-sm font-semibold text-slate-500 dark:text-slate-300">
-              <span className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-white/15" aria-hidden />
-              <span className="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-200">ou</span>
-              <span className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-white/15" aria-hidden />
+            <div className="flex items-center gap-3 py-2 text-sm font-semibold text-slate-500 dark:text-slate-300">
+              <span className="h-px flex-1 bg-slate-200 dark:bg-white/15" aria-hidden />
+              <span className="px-2 text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-200">ou</span>
+              <span className="h-px flex-1 bg-slate-200 dark:bg-white/15" aria-hidden />
             </div>
           </div>
 
           <div className="space-y-4">
             {status === 'success' ? (
-              <div className="space-y-4 rounded-2xl border border-emerald-100/80 bg-emerald-50/70 p-5 text-sm text-emerald-900 shadow-[0_12px_40px_-26px_rgba(16,185,129,0.8)] dark:border-emerald-400/25 dark:bg-emerald-500/10 dark:text-emerald-100">
-                <div className="space-y-1">
-                  <p className="text-lg font-semibold text-emerald-800 dark:text-emerald-100">Lien envoyé</p>
-                  <p className="text-sm text-emerald-700 dark:text-emerald-100/90">Ouvrez votre email pour vous connecter.</p>
+              <div className="space-y-5 rounded-2xl border border-emerald-200/70 bg-emerald-50/70 p-6 text-sm text-emerald-900 shadow-[0_18px_60px_-32px_rgba(16,185,129,0.65)] dark:border-emerald-400/25 dark:bg-emerald-500/10 dark:text-emerald-100">
+                <div className="space-y-2 text-center">
+                  <p className="text-2xl font-semibold text-emerald-800 dark:text-emerald-100">Lien envoyé ✅</p>
+                  <p className="text-base text-emerald-700 dark:text-emerald-100/85">Ouvrez votre email pour confirmer votre compte.</p>
                 </div>
                 <button
                   type="button"
                   onClick={handleResend}
                   disabled={resendTimer > 0}
                   className={cn(
-                    'inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-400/30 transition',
+                    'inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 px-4 py-3 text-[15px] font-semibold text-white shadow-lg shadow-indigo-400/30 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-50 dark:focus-visible:ring-offset-emerald-900/40',
                     resendTimer > 0
-                      ? 'cursor-not-allowed opacity-60'
-                      : 'hover:-translate-y-[2px] hover:shadow-xl hover:shadow-indigo-300/40',
+                      ? 'cursor-not-allowed opacity-70'
+                      : 'hover:-translate-y-[2px] hover:shadow-xl hover:shadow-indigo-300/40 active:translate-y-[1px]',
                   )}
                 >
                   {resendTimer > 0 ? `Renvoyer le lien (${resendTimer}s)` : 'Renvoyer le lien'}
                 </button>
-                <p className="text-xs font-medium text-emerald-700 dark:text-emerald-100/80">Vérifiez vos spams.</p>
+                <p className="text-xs font-medium text-emerald-700 dark:text-emerald-100/80 text-center">Vérifiez vos spams.</p>
               </div>
             ) : (
               <form className="space-y-4" onSubmit={handleSubmit}>
@@ -313,10 +321,10 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="nom@entreprise.com"
-                    className="h-11 w-full rounded-xl border border-slate-200 bg-white/80 px-3 text-[15px] text-slate-900 shadow-inner shadow-indigo-100/30 transition focus:border-indigo-300 focus:outline-none focus:ring-4 focus:ring-indigo-100/80 dark:border-white/10 dark:bg-slate-800/70 dark:text-slate-50"
+                    className="h-12 w-full rounded-xl border border-slate-200/90 bg-white/90 px-4 text-[15px] text-slate-900 shadow-inner shadow-indigo-100/30 transition focus:border-indigo-300 focus:outline-none focus:ring-4 focus:ring-indigo-100 dark:border-white/12 dark:bg-slate-900/60 dark:text-slate-50 dark:focus:border-indigo-400"
                     required
                   />
-                  <p className="text-[12px] font-medium text-slate-500 dark:text-slate-300">Connexion par lien sécurisé — valable 10 minutes.</p>
+                  <p className="text-[12px] font-medium text-slate-500 dark:text-slate-300">Vous recevrez un lien sécurisé pour confirmer.</p>
                 </div>
 
                 {usePassword && (
@@ -331,7 +339,7 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
                       autoComplete="current-password"
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
-                      className="h-11 w-full rounded-xl border border-slate-200 bg-white/80 px-3 text-[15px] text-slate-900 shadow-inner shadow-indigo-100/30 transition focus:border-indigo-300 focus:outline-none focus:ring-4 focus:ring-indigo-100/80 dark:border-white/10 dark:bg-slate-800/70 dark:text-slate-50"
+                      className="h-12 w-full rounded-xl border border-slate-200/90 bg-white/90 px-4 text-[15px] text-slate-900 shadow-inner shadow-indigo-100/30 transition focus:border-indigo-300 focus:outline-none focus:ring-4 focus:ring-indigo-100 dark:border-white/12 dark:bg-slate-900/60 dark:text-slate-50 dark:focus:border-indigo-400"
                     />
                   </div>
                 )}
@@ -342,10 +350,10 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
                   type="submit"
                   disabled={loading}
                   className={cn(
-                    'flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 px-4 text-[15px] font-semibold text-white shadow-lg shadow-indigo-400/30 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200',
+                    'flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 px-4 text-[15px] font-semibold text-white shadow-lg shadow-indigo-400/30 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-900',
                     loading
                       ? 'cursor-progress opacity-90'
-                      : 'hover:-translate-y-[2px] hover:shadow-xl hover:shadow-indigo-300/50 active:translate-y-0',
+                      : 'hover:-translate-y-[2px] hover:shadow-xl hover:shadow-indigo-300/50 active:translate-y-[1px] active:shadow-md',
                   )}
                 >
                   {loading && <Spinner />}
@@ -391,8 +399,18 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
             )}
           </div>
 
-          <div className="space-y-2 text-center text-xs text-slate-500 dark:text-slate-200">
-            <p className="font-medium">En continuant, vous acceptez les Conditions et la Confidentialité.</p>
+          <div className="space-y-3 text-center text-[13px] text-slate-500 dark:text-slate-200">
+            <p className="font-medium">
+              En continuant, vous acceptez les{' '}
+              <a className="text-indigo-600 underline-offset-4 transition hover:text-indigo-700 hover:underline dark:text-indigo-300" href="#">
+                Conditions
+              </a>{' '}
+              et la{' '}
+              <a className="text-indigo-600 underline-offset-4 transition hover:text-indigo-700 hover:underline dark:text-indigo-300" href="#">
+                Confidentialité
+              </a>
+              .
+            </p>
             <div className="text-sm font-semibold text-slate-700 dark:text-slate-100">
               {mode === 'login' ? 'Pas de compte ?' : 'Déjà un compte ?'}{' '}
               <button
