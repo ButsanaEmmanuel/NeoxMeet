@@ -11,6 +11,13 @@ interface Room {
   title: string;
 }
 
+interface RecentRoom {
+  title: string;
+  meta: string;
+  action: string;
+  code?: string;
+}
+
 const languagesDetected = ['English', 'Français', 'Lingála'];
 const transcriptLines = [
   { time: '10:04', speaker: 'Amina K.', text: 'We need to finalize the rollout plan for the new onboarding…' },
@@ -22,7 +29,7 @@ const translationLines = [
   'Le principal risque concerne la compatibilité des appareils et la bande passante…',
   'Alignons-nous sur le marché pilote avant l’approvisionnement…',
 ];
-const fallbackRecent = [
+const fallbackRecent: RecentRoom[] = [
   { title: 'Client Review — Enabel', meta: 'Yesterday', action: 'Rejoin' },
   { title: 'Security Training — FARDC', meta: 'Yesterday', action: 'Open notes' },
   { title: 'Design Sprint — Mobile', meta: '2 days ago', action: 'Rejoin' },
@@ -123,7 +130,7 @@ export default function DashboardPage() {
     router.push('/login');
   };
 
-  const recentRooms = rooms.length
+  const recentRooms: RecentRoom[] = rooms.length
     ? rooms.slice(0, 3).map((room) => ({
         title: room.title,
         meta: 'Recently visited',
@@ -434,7 +441,7 @@ export default function DashboardPage() {
                     </div>
                     <button
                       className="rounded-2xl border border-white/15 px-3 py-2 text-xs text-white/80 hover:border-cyan-400/60"
-                      onClick={() => (room as any).code ? router.push(`/room/${(room as any).code}`) : null}
+                      onClick={() => (room.code ? router.push(`/room/${room.code}`) : null)}
                     >
                       {room.action}
                     </button>

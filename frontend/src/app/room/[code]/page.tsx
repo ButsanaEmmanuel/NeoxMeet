@@ -16,14 +16,17 @@ function CaptionsOverlay() {
     const handler = (payload: Uint8Array) => {
       try {
         const parsed = JSON.parse(new TextDecoder().decode(payload));
-        if (parsed.type === 'caption' && parsed.segments) {
-          const text = parsed.segments.map((s: any) => s.text).join(' ');
+        if (parsed.type === 'caption' && Array.isArray(parsed.segments)) {
+          const text = parsed.segments
+            .map((segment: { text?: string }) => segment.text)
+            .filter(Boolean)
+            .join(' ');
           setCaptions((prev) => [...prev.slice(-4), text]);
         }
         if (parsed.type === 'transcriber-status' && parsed.status) {
           setCaptions((prev) => [...prev.slice(-4), `Bot: ${parsed.status}`]);
         }
-      } catch (error) {
+      } catch {
         // ignore parse errors
       }
     };
@@ -66,8 +69,17 @@ export default function RoomPage({ params }: { params: { code: string } }) {
         });
         setToken(res.data.token);
         setServerUrl(res.data.livekitUrl);
-      } catch (err: any) {
-        setError(err?.response?.data?.message || 'Unable to join room');
+      } catch (err) {
+        const message = (() => {
+          if (typeof err === 'object' && err !== null && 'response' in err) {
+            const response = (err as { response?: { data?: { message?: string } } }).response;
+            return response?.data?.message;
+          }
+          if (err instanceof Error) return err.message;
+          return null;
+        })();
+
+        setError(message || 'Unable to join room');
       }
     };
     loadToken();

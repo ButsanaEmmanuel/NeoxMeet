@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 import api from '../../lib/api';
 import { saveTokens, saveDisplayName } from '../../lib/auth';
+import { makeZodResolver } from '../../lib/zodResolver';
 
 const schema = z.object({
   name: z.string().min(1),
@@ -23,7 +23,7 @@ export default function RegisterPage() {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<FormData>({ resolver: makeZodResolver(schema) });
 
   const onSubmit = async (data: FormData) => {
     setError(null);
@@ -32,8 +32,16 @@ export default function RegisterPage() {
       saveTokens(response.data.accessToken, response.data.refreshToken);
       saveDisplayName(data.name);
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err?.response?.data?.message || 'Registration failed');
+    } catch (err) {
+      const message = (() => {
+        if (typeof err === 'object' && err !== null && 'response' in err) {
+          const response = (err as { response?: { data?: { message?: string } } }).response;
+          return response?.data?.message;
+        }
+        if (err instanceof Error) return err.message;
+        return null;
+      })();
+      setError(message || 'Registration failed');
     }
   };
 
