@@ -196,8 +196,8 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
 
   const primaryLabel = (() => {
     if (usePassword) return loading ? 'Connexion…' : 'Se connecter';
-    if (mode === 'signup') return loading ? 'Envoi du lien…' : 'Créer mon compte';
-    return loading ? 'Envoi du lien…' : 'Recevoir un lien de connexion';
+    if (mode === 'signup') return loading ? 'Envoi…' : 'Créer mon compte';
+    return loading ? 'Envoi…' : 'Recevoir un lien de connexion';
   })();
 
   if (!render) return null;
@@ -229,31 +229,32 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
         )}
         onClick={(event) => event.stopPropagation()}
       >
-        <button
-          className="absolute right-4 top-4 rounded-full border border-slate-200/80 bg-white/70 p-2 text-slate-500 shadow-sm transition hover:-translate-y-0.5 hover:text-slate-800 hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:border-white/10 dark:bg-white/10 dark:text-slate-200"
-          onClick={onClose}
-          aria-label="Fermer"
-          type="button"
-        >
-          ✕
-        </button>
-
         <div className="space-y-6">
-          <div className="space-y-3">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-indigo-600 dark:text-indigo-300">ACCÈS SÉCURISÉ</p>
-            <div className="space-y-1">
-              <h2 id="auth-modal-title" className="text-2xl font-semibold text-slate-900 dark:text-slate-50">
-                {mode === 'login' ? 'Se connecter' : 'Créer votre compte'}
-              </h2>
-              <p className="text-sm text-slate-600 dark:text-slate-300">
-                {mode === 'login'
-                  ? 'Accès rapide à vos réunions et recaps.'
-                  : 'Démarrez en quelques secondes. Aucune carte requise.'}
+          <div className="flex items-start justify-between gap-4">
+            <div className="space-y-3">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-indigo-600 dark:text-indigo-300">ACCÈS SÉCURISÉ</p>
+              <div className="space-y-1">
+                <h2 id="auth-modal-title" className="text-2xl font-semibold text-slate-900 dark:text-slate-50">
+                  {mode === 'login' ? 'Se connecter' : 'Créer votre compte'}
+                </h2>
+                <p className="text-sm text-slate-600 dark:text-slate-300">
+                  {mode === 'login'
+                    ? 'Accès rapide à vos réunions et recaps.'
+                    : 'Démarrez en quelques secondes. Aucune carte requise.'}
+                </p>
+              </div>
+              <p className="text-xs font-semibold text-slate-500 dark:text-slate-300">
+                Sessions chiffrées • Protection anti-abuse • Connexion rapide
               </p>
             </div>
-            <p className="text-xs font-semibold text-slate-500 dark:text-slate-300">
-              Sessions chiffrées • Protection anti-abuse • Connexion rapide
-            </p>
+            <button
+              className="mt-1 inline-flex h-9 w-9 items-center justify-center rounded-xl text-slate-500 transition hover:bg-slate-100/70 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:text-slate-200 dark:hover:bg-white/5"
+              onClick={onClose}
+              aria-label="Fermer"
+              type="button"
+            >
+              <span aria-hidden>✕</span>
+            </button>
           </div>
 
           <div className="space-y-3">
@@ -261,23 +262,24 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
               <button
                 key={label}
                 type="button"
-                className="flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white/90 text-[15px] font-semibold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-indigo-50/70 hover:shadow-lg hover:shadow-indigo-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:border-white/10 dark:bg-slate-800/70 dark:text-slate-100 dark:hover:border-indigo-400/40 dark:hover:bg-slate-800"
+                className="group flex h-12 w-full items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/95 px-3 text-[15px] font-semibold text-slate-800 shadow-sm shadow-slate-200/70 transition hover:-translate-y-[2px] hover:border-indigo-200 hover:bg-indigo-50/60 hover:shadow-lg hover:shadow-indigo-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:border-white/10 dark:bg-slate-800/70 dark:text-slate-100 dark:shadow-none dark:hover:border-indigo-400/40 dark:hover:bg-slate-800"
               >
-                <Icon />
-                <span>{label}</span>
+                <span className="flex w-10 items-center justify-center text-slate-500 group-hover:text-slate-700 dark:text-slate-200">
+                  <Icon />
+                </span>
+                <span className="flex-1 text-center leading-none">{label}</span>
               </button>
             ))}
-            <div className="relative flex items-center justify-center py-2 text-sm text-slate-500 dark:text-slate-300">
-              <span className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-white/15" aria-hidden />
-              <span className="relative rounded-full bg-white/70 px-3 py-1 text-xs font-semibold text-slate-600 shadow-sm dark:bg-slate-900/80 dark:text-slate-200">
-                ou
-              </span>
+            <div className="flex items-center gap-3 py-3 text-sm font-semibold text-slate-500 dark:text-slate-300">
+              <span className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-white/15" aria-hidden />
+              <span className="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-200">ou</span>
+              <span className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent dark:via-white/15" aria-hidden />
             </div>
           </div>
 
           <div className="space-y-4">
             {status === 'success' ? (
-              <div className="space-y-4 rounded-2xl border border-emerald-100 bg-emerald-50/80 p-5 text-sm text-emerald-900 shadow-inner shadow-emerald-100/70 dark:border-emerald-400/20 dark:bg-emerald-500/10 dark:text-emerald-100">
+              <div className="space-y-4 rounded-2xl border border-emerald-100/80 bg-emerald-50/70 p-5 text-sm text-emerald-900 shadow-[0_12px_40px_-26px_rgba(16,185,129,0.8)] dark:border-emerald-400/25 dark:bg-emerald-500/10 dark:text-emerald-100">
                 <div className="space-y-1">
                   <p className="text-lg font-semibold text-emerald-800 dark:text-emerald-100">Lien envoyé</p>
                   <p className="text-sm text-emerald-700 dark:text-emerald-100/90">Ouvrez votre email pour vous connecter.</p>
@@ -288,7 +290,9 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
                   disabled={resendTimer > 0}
                   className={cn(
                     'inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-400/30 transition',
-                    resendTimer > 0 ? 'cursor-not-allowed opacity-60' : 'hover:-translate-y-0.5 hover:shadow-xl',
+                    resendTimer > 0
+                      ? 'cursor-not-allowed opacity-60'
+                      : 'hover:-translate-y-[2px] hover:shadow-xl hover:shadow-indigo-300/40',
                   )}
                 >
                   {resendTimer > 0 ? `Renvoyer le lien (${resendTimer}s)` : 'Renvoyer le lien'}
@@ -308,9 +312,11 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
                     autoComplete="email"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
-                    className="h-11 w-full rounded-xl border border-slate-200 bg-white/70 px-3 text-[15px] text-slate-900 shadow-inner shadow-indigo-100/40 transition focus:border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-white/10 dark:bg-slate-800/70 dark:text-slate-50"
+                    placeholder="nom@entreprise.com"
+                    className="h-11 w-full rounded-xl border border-slate-200 bg-white/80 px-3 text-[15px] text-slate-900 shadow-inner shadow-indigo-100/30 transition focus:border-indigo-300 focus:outline-none focus:ring-4 focus:ring-indigo-100/80 dark:border-white/10 dark:bg-slate-800/70 dark:text-slate-50"
                     required
                   />
+                  <p className="text-[12px] font-medium text-slate-500 dark:text-slate-300">Connexion par lien sécurisé — valable 10 minutes.</p>
                 </div>
 
                 {usePassword && (
@@ -325,7 +331,7 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
                       autoComplete="current-password"
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
-                      className="h-11 w-full rounded-xl border border-slate-200 bg-white/70 px-3 text-[15px] text-slate-900 shadow-inner shadow-indigo-100/40 transition focus:border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-white/10 dark:bg-slate-800/70 dark:text-slate-50"
+                      className="h-11 w-full rounded-xl border border-slate-200 bg-white/80 px-3 text-[15px] text-slate-900 shadow-inner shadow-indigo-100/30 transition focus:border-indigo-300 focus:outline-none focus:ring-4 focus:ring-indigo-100/80 dark:border-white/10 dark:bg-slate-800/70 dark:text-slate-50"
                     />
                   </div>
                 )}
@@ -337,7 +343,9 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
                   disabled={loading}
                   className={cn(
                     'flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 px-4 text-[15px] font-semibold text-white shadow-lg shadow-indigo-400/30 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200',
-                    loading ? 'cursor-progress opacity-90' : 'hover:-translate-y-0.5 hover:shadow-xl',
+                    loading
+                      ? 'cursor-progress opacity-90'
+                      : 'hover:-translate-y-[2px] hover:shadow-xl hover:shadow-indigo-300/50 active:translate-y-0',
                   )}
                 >
                   {loading && <Spinner />}
@@ -355,7 +363,7 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
                     {!usePassword ? (
                       <button
                         type="button"
-                        className="font-semibold text-indigo-600 transition hover:text-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:text-indigo-300"
+                        className="font-semibold text-slate-600 underline-offset-4 transition hover:text-indigo-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:text-slate-200"
                         onClick={() => setUsePassword(true)}
                       >
                         Utiliser un mot de passe
@@ -364,14 +372,14 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
                       <div className="flex flex-wrap gap-2">
                         <button
                           type="button"
-                          className="font-semibold text-indigo-600 transition hover:text-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:text-indigo-300"
+                          className="font-semibold text-slate-600 underline-offset-4 transition hover:text-indigo-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:text-slate-200"
                           onClick={() => setUsePassword(false)}
                         >
                           Revenir au lien sécurisé
                         </button>
                         <button
                           type="button"
-                          className="font-semibold text-indigo-600 transition hover:text-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:text-indigo-300"
+                          className="font-semibold text-slate-600 underline-offset-4 transition hover:text-indigo-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-200 dark:text-slate-200"
                         >
                           Mot de passe oublié ?
                         </button>
@@ -383,9 +391,9 @@ export function AuthModal({ isOpen, mode, onClose, onModeChange }: AuthModalProp
             )}
           </div>
 
-          <div className="space-y-3 rounded-2xl border border-slate-200/70 bg-white/70 p-4 text-xs text-slate-500 shadow-inner shadow-slate-100/60 dark:border-white/10 dark:bg-slate-800/60 dark:text-slate-200">
-            <p className="text-center font-medium">En continuant, vous acceptez les Conditions et la Confidentialité.</p>
-            <div className="text-center text-sm font-semibold text-slate-700 dark:text-slate-100">
+          <div className="space-y-2 text-center text-xs text-slate-500 dark:text-slate-200">
+            <p className="font-medium">En continuant, vous acceptez les Conditions et la Confidentialité.</p>
+            <div className="text-sm font-semibold text-slate-700 dark:text-slate-100">
               {mode === 'login' ? 'Pas de compte ?' : 'Déjà un compte ?'}{' '}
               <button
                 type="button"
