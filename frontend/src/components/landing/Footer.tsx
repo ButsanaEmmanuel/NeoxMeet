@@ -1,40 +1,187 @@
+import { OutlineCTA, PrimaryCTA } from './CTAs';
+
 const columns = [
-  { title: 'Product', links: ['Overview', 'Live translation', 'Recap AI', 'Integrations'] },
-  { title: 'Security', links: ['Security overview', 'Compliance', 'Status', 'Privacy'] },
-  { title: 'Resources', links: ['Docs', 'API reference', 'Guides', 'Blog'] },
-  { title: 'Company', links: ['About', 'Careers', 'Press', 'Contact'] },
-  { title: 'Legal', links: ['Terms', 'Privacy', 'Sub-processors', 'Accessibility'] },
+  {
+    title: 'Produit',
+    links: [
+      { label: 'Fonctionnalités', href: '#product' },
+      { label: 'Traduction en direct', href: '#live-translation' },
+      { label: 'Compte-rendu automatique', href: '#recap' },
+      { label: 'Enregistrement', href: '#recording' },
+      { label: 'Intégrations', href: '#integrations' },
+    ],
+  },
+  {
+    title: 'Entreprise',
+    links: [
+      { label: 'Sécurité', href: '#security' },
+      { label: 'Conformité', href: '#compliance' },
+      { label: 'Tarifs', href: '#pricing' },
+      { label: 'Contact', href: '#contact' },
+      { label: 'Carrières', href: '#careers' },
+    ],
+  },
+  {
+    title: 'Ressources',
+    links: [
+      { label: 'Documentation', href: '#docs' },
+      { label: "Centre d'aide", href: '#help' },
+      { label: 'Statut', href: '#status' },
+      { label: 'Blog', href: '#blog' },
+      { label: 'Guides', href: '#guides' },
+    ],
+  },
+  {
+    title: 'Légal',
+    links: [
+      { label: 'Conditions', href: '#terms' },
+      { label: 'Confidentialité', href: '#privacy' },
+      { label: 'Cookies', href: '#cookies' },
+      { label: 'DPA', href: '#dpa' },
+      { label: 'Mentions légales', href: '#mentions' },
+    ],
+  },
+];
+
+const badges = ['TLS', 'Privacy', 'Enterprise'];
+
+const social = [
+  {
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com',
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
+        <path d="M5.2 9H2.4v12h2.8V9Zm.3-3.9a1.7 1.7 0 0 0-1.7-1.7C2.7 3.4 2 4.2 2 5a1.7 1.7 0 0 0 1.8 1.7c1 0 1.7-.8 1.7-1.7ZM22 21V14c0-3.6-1.9-5.4-4.4-5.4a3.9 3.9 0 0 0-3.5 1.9h-.1V9h-2.7v12h2.8v-6.4c0-1.7.7-2.9 2.1-2.9 1.2 0 2 .9 2 2.9V21H22Z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'X',
+    href: 'https://www.twitter.com',
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
+        <path d="M18.8 4h3.1l-6.8 7.8L22 20h-6.2l-3.7-4.8L7.9 20H4.7l7.3-8.4L2 4h6.4l3.3 4.3L15.2 4h3.6l-6.2 7Z" />
+      </svg>
+    ),
+  },
+  {
+    name: 'YouTube',
+    href: 'https://www.youtube.com',
+    icon: (
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
+        <path d="M21.6 7.2s-.2-1.6-.8-2.3c-.7-.8-1.5-.8-1.8-.8C16 4 12 4 12 4h-.1s-4 0-7 .1c-.3 0-1.1 0-1.8.8-.6.7-.8 2.3-.8 2.3S2 9.1 2 11v2c0 1.9.3 3.8.3 3.8s.2 1.6.8 2.3c.7.8 1.7.8 2.1.9 1.5.1 6.8.1 6.8.1s4 0 7-.1c.3 0 1.1 0 1.8-.8.6-.7.8-2.3.8-2.3s.3-1.9.3-3.8v-2c0-1.9-.3-3.8-.3-3.8ZM9.8 14.9v-6l5.2 3-5.2 3Z" />
+      </svg>
+    ),
+  },
 ];
 
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-white py-12">
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 text-slate-600 lg:flex-row lg:justify-between">
-        <div className="space-y-3">
-          <div className="flex items-center gap-2 text-slate-900">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-sky-500 text-lg font-black text-white">
-              N
-            </div>
-            <span className="text-lg font-semibold">NeoxMeet</span>
+    <footer className="border-t border-slate-200 bg-gradient-to-b from-white via-white to-slate-50">
+      <div className="mx-auto max-w-[1200px] space-y-12 px-6 py-20">
+        <div className="relative overflow-hidden rounded-[28px] border border-white/60 bg-white/80 p-7 shadow-[0_28px_80px_-48px_rgba(79,70,229,0.35)] backdrop-blur-xl lg:flex lg:items-center lg:justify-between lg:gap-10 lg:p-8">
+          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-indigo-50 via-white to-cyan-50" aria-hidden />
+          <div className="space-y-2">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-indigo-500">Multilingue & sécurité</p>
+            <h3 className="text-2xl font-semibold text-slate-900">Prêt à lancer vos réunions multilingues ?</h3>
+            <p className="text-sm text-slate-600">Réservez une démo ou démarrez en quelques secondes.</p>
           </div>
-          <p className="max-w-sm text-sm text-slate-600">AI-powered meetings with instant translation, transcription, and enterprise readiness.</p>
-          <p className="text-xs text-slate-400">© {new Date().getFullYear()} NeoxMeet. All rights reserved.</p>
+          <div className="mt-5 flex flex-wrap items-center gap-3 lg:mt-0">
+            <PrimaryCTA href="/register" className="h-11 px-5 text-[15px]">
+              Réserver une démo
+            </PrimaryCTA>
+            <OutlineCTA href="/dashboard" className="h-11 px-5 text-[15px]">
+              Lancer une réunion
+            </OutlineCTA>
+          </div>
         </div>
-        <div className="grid flex-1 gap-6 text-sm sm:grid-cols-2 lg:grid-cols-5">
-          {columns.map((column) => (
-            <div key={column.title} className="space-y-3">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{column.title}</p>
-              <ul className="space-y-2">
-                {column.links.map((link) => (
-                  <li key={link}>
-                    <a className="text-slate-600 transition hover:text-slate-900" href="#">
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+
+        <div className="grid gap-10 lg:grid-cols-5">
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 text-slate-900">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 via-violet-600 to-sky-500 text-lg font-black text-white shadow-lg shadow-indigo-200/70">
+                N
+              </div>
+              <span className="text-xl font-semibold">NeoxMeet</span>
             </div>
-          ))}
+            <p className="max-w-xs text-sm text-slate-600">
+              Réunions sécurisées avec traduction en direct et recap intelligent.
+            </p>
+            <div className="flex flex-wrap gap-2 text-[12px] font-semibold text-slate-700">
+              {badges.map((badge) => (
+                <span
+                  key={badge}
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-3 py-1 shadow-sm shadow-indigo-100/40"
+                >
+                  {badge}
+                </span>
+              ))}
+            </div>
+            <p className="text-[13px] font-medium text-slate-600">
+              Chiffrement, contrôle d’accès, et journaux d’audit (Enterprise).
+            </p>
+          </div>
+
+          <div className="hidden gap-8 lg:grid lg:grid-cols-4">
+            {columns.map((column) => (
+              <div key={column.title} className="space-y-4">
+                <p className="text-[12px] font-semibold uppercase tracking-[0.28em] text-slate-500">{column.title}</p>
+                <ul className="space-y-3 text-sm">
+                  {column.links.map((link) => (
+                    <li key={link.label}>
+                      <a
+                        className="text-slate-700 transition hover:text-slate-900 hover:underline hover:underline-offset-4"
+                        href={link.href}
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="divide-y divide-slate-200 rounded-2xl border border-slate-100 bg-white/80 lg:hidden">
+            {columns.map((column) => (
+              <details key={column.title} className="group">
+                <summary className="flex cursor-pointer items-center justify-between px-4 py-4 text-[15px] font-semibold text-slate-800 transition group-open:bg-slate-50">
+                  <span>{column.title}</span>
+                  <span className="text-slate-400">+</span>
+                </summary>
+                <div className="space-y-3 px-4 pb-4 text-sm text-slate-700">
+                  {column.links.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      className="block rounded-lg px-2 py-2 transition hover:bg-slate-100/80 hover:text-slate-900"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+
+        <div className="border-t border-slate-200 pt-6 text-sm text-slate-600 lg:flex lg:items-center lg:justify-between">
+          <p className="font-medium text-slate-700">© 2025 NeoxMeet. Tous droits réservés.</p>
+          <div className="mt-3 flex items-center gap-4 lg:mt-0">
+            <span className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700">Langue : FR | EN</span>
+            <div className="flex items-center gap-3 text-slate-500">
+              {social.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 bg-white/70 text-slate-600 transition hover:-translate-y-0.5 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700 hover:shadow-md hover:shadow-indigo-100"
+                  aria-label={item.name}
+                >
+                  {item.icon}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </footer>
