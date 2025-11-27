@@ -267,9 +267,11 @@ export default function Home() {
             </div>
           </section>
 
-          <HowItWorksSection />
+          <section className="space-y-12" aria-label="Comment ça marche et traduction en direct">
+            <HowItWorksSection />
 
-          <LiveTranslationSection />
+            <LiveTranslationSection />
+          </section>
 
           <section className="rounded-[24px] bg-white/85 p-6 shadow-[0_30px_80px_-48px_rgba(51,65,85,0.35)] backdrop-blur-lg">
             <div className="grid gap-4 sm:grid-cols-3">
