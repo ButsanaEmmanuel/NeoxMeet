@@ -78,40 +78,52 @@ const social = [
 export function Footer() {
   return (
     <footer className="border-t border-slate-200 bg-gradient-to-b from-white via-white to-slate-50">
-      <div className="mx-auto max-w-[1200px] space-y-12 px-6 py-20">
-        <div className="relative overflow-hidden rounded-[28px] border border-white/60 bg-white/80 p-7 shadow-[0_28px_80px_-48px_rgba(79,70,229,0.35)] backdrop-blur-xl lg:flex lg:items-center lg:justify-between lg:gap-10 lg:p-8">
-          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-indigo-50 via-white to-cyan-50" aria-hidden />
-          <div className="space-y-2">
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-indigo-500">Multilingue & sécurité</p>
-            <h3 className="text-2xl font-semibold text-slate-900">Prêt à lancer vos réunions multilingues ?</h3>
-            <p className="text-sm text-slate-600">Réservez une démo ou démarrez en quelques secondes.</p>
-          </div>
-          <div className="mt-5 flex flex-wrap items-center gap-3 lg:mt-0">
-            <PrimaryCTA href="/register" className="h-11 px-5 text-[15px]">
-              Réserver une démo
-            </PrimaryCTA>
-            <OutlineCTA href="/dashboard" className="h-11 px-5 text-[15px]">
-              Lancer une réunion
-            </OutlineCTA>
+      <div className="mx-auto max-w-[1200px] space-y-12 px-6 py-20 lg:space-y-14">
+        <div className="relative overflow-hidden rounded-[28px] border border-slate-200/80 bg-white/75 p-8 shadow-[0_24px_70px_-40px_rgba(15,23,42,0.38)] backdrop-blur-xl">
+          <div
+            className="absolute inset-0 -z-10 bg-gradient-to-r from-white via-white to-white"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-[-40%] -z-20 opacity-90 blur-3xl"
+            aria-hidden
+            style={{ background: 'radial-gradient(circle at 20% 20%, rgba(99,102,241,0.18), transparent 40%), radial-gradient(circle at 80% 0%, rgba(6,182,212,0.18), transparent 42%)' }}
+          />
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div className="space-y-2">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-indigo-500">Multilingue & sécurité</p>
+              <h3 className="text-2xl font-semibold leading-tight text-slate-900 lg:text-[26px]">
+                Prêt à lancer vos réunions multilingues ?
+              </h3>
+              <p className="text-sm text-slate-600">Réservez une démo ou démarrez en quelques secondes.</p>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
+              <PrimaryCTA href="/register" className="h-11 w-full px-5 text-[15px] sm:w-auto">
+                Réserver une démo
+              </PrimaryCTA>
+              <OutlineCTA href="/dashboard" className="h-11 w-full px-5 text-[15px] sm:w-auto">
+                Lancer une réunion
+              </OutlineCTA>
+            </div>
           </div>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-5">
-          <div className="space-y-4">
+        <div className="space-y-8 lg:space-y-12">
+          <div className="space-y-5 lg:hidden">
             <div className="flex items-center gap-3 text-slate-900">
               <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 via-violet-600 to-sky-500 text-lg font-black text-white shadow-lg shadow-indigo-200/70">
                 N
               </div>
               <span className="text-xl font-semibold">NeoxMeet</span>
             </div>
-            <p className="max-w-xs text-sm text-slate-600">
+            <p className="max-w-md text-sm text-slate-600">
               Réunions sécurisées avec traduction en direct et recap intelligent.
             </p>
             <div className="flex flex-wrap gap-2 text-[12px] font-semibold text-slate-700">
               {badges.map((badge) => (
                 <span
                   key={badge}
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-3 py-1 shadow-sm shadow-indigo-100/40"
+                  className="inline-flex items-center rounded-full border border-slate-200/80 bg-white/90 px-3 py-1 shadow-sm shadow-indigo-100/50"
                 >
                   {badge}
                 </span>
@@ -122,15 +134,41 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="hidden gap-8 lg:grid lg:grid-cols-4">
+          <div className="hidden gap-12 lg:grid lg:grid-cols-[1.7fr_repeat(4,_1fr)] lg:items-start">
+            <div className="space-y-5 pr-6">
+              <div className="flex items-center gap-3 text-slate-900">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 via-violet-600 to-sky-500 text-lg font-black text-white shadow-lg shadow-indigo-200/70">
+                  N
+                </div>
+                <span className="text-xl font-semibold">NeoxMeet</span>
+              </div>
+              <p className="max-w-md text-sm text-slate-600">
+                Réunions sécurisées avec traduction en direct et recap intelligent.
+              </p>
+              <div className="flex flex-wrap gap-2 text-[12px] font-semibold text-slate-700">
+                {badges.map((badge) => (
+                  <span
+                    key={badge}
+                    className="inline-flex items-center rounded-full border border-slate-200/80 bg-white/90 px-3 py-1 shadow-sm shadow-indigo-100/50"
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
+              <p className="text-[13px] font-medium text-slate-600">
+                Chiffrement, contrôle d’accès, et journaux d’audit (Enterprise).
+              </p>
+            </div>
             {columns.map((column) => (
               <div key={column.title} className="space-y-4">
-                <p className="text-[12px] font-semibold uppercase tracking-[0.28em] text-slate-500">{column.title}</p>
+                <p className="text-[12px] font-semibold uppercase tracking-[0.28em] text-slate-500 whitespace-nowrap">
+                  {column.title}
+                </p>
                 <ul className="space-y-3 text-sm">
                   {column.links.map((link) => (
                     <li key={link.label}>
                       <a
-                        className="text-slate-700 transition hover:text-slate-900 hover:underline hover:underline-offset-4"
+                        className="inline-block text-slate-700 transition hover:text-slate-900 hover:underline hover:underline-offset-4"
                         href={link.href}
                       >
                         {link.label}
@@ -142,14 +180,14 @@ export function Footer() {
             ))}
           </div>
 
-          <div className="divide-y divide-slate-200 rounded-2xl border border-slate-100 bg-white/80 lg:hidden">
+          <div className="divide-y divide-slate-200 rounded-2xl border border-slate-100 bg-white/85 lg:hidden">
             {columns.map((column) => (
               <details key={column.title} className="group">
                 <summary className="flex cursor-pointer items-center justify-between px-4 py-4 text-[15px] font-semibold text-slate-800 transition group-open:bg-slate-50">
-                  <span>{column.title}</span>
+                  <span className="whitespace-nowrap">{column.title}</span>
                   <span className="text-slate-400">+</span>
                 </summary>
-                <div className="space-y-3 px-4 pb-4 text-sm text-slate-700">
+                <div className="space-y-2 px-4 pb-4 text-sm text-slate-700">
                   {column.links.map((link) => (
                     <a
                       key={link.label}
@@ -165,12 +203,11 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-200 pt-6 text-sm text-slate-600 lg:flex lg:items-center lg:justify-between">
-          <p className="font-medium text-slate-700">© 2025 NeoxMeet. Tous droits réservés.</p>
+        <div className="border-t border-slate-200 pt-6 text-[13px] text-slate-500 lg:flex lg:items-center lg:justify-between">
+          <p className="font-medium text-slate-600">© 2025 NeoxMeet. Tous droits réservés.</p>
           <div className="mt-3 flex items-center gap-4 lg:mt-0">
-            <span className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-700">Langue : FR | EN</span>
             <div className="flex items-center gap-3 text-slate-500">
-              {social.map((item) => (
+              {social.slice(0, 2).map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
@@ -181,6 +218,7 @@ export function Footer() {
                 </a>
               ))}
             </div>
+            <span className="rounded-full border border-slate-200 px-3 py-1 text-[13px] font-semibold text-slate-700">Langue : FR | EN</span>
           </div>
         </div>
       </div>
