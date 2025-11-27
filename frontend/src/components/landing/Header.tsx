@@ -5,10 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { cn } from '../../lib/utils';
 import { AuthModal, type AuthMode } from './AuthModal';
 import { HeaderCTA } from './CTAs';
-
-type HeaderProps = {
-  onDemoClick?: () => void;
-};
+import { useDemoModal } from '../providers/DemoModalProvider';
 
 const links = [
   { label: 'Produit', href: '#product' },
@@ -16,13 +13,14 @@ const links = [
   { label: 'Tarifs', href: '#pricing' },
 ];
 
-export function Header({ onDemoClick }: HeaderProps) {
+export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<AuthMode>('login');
   const menuRef = useRef<HTMLDivElement>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
+  const { open: openDemo } = useDemoModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -123,7 +121,7 @@ export function Header({ onDemoClick }: HeaderProps) {
               S’inscrire
             </button>
             <HeaderCTA
-              href="/register"
+              onClick={openDemo}
               className="h-11 shrink-0 items-center gap-2 bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 px-5 text-[14px] text-white shadow-md shadow-indigo-500/20 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-400/30"
             >
               Réserver une démo
@@ -162,7 +160,10 @@ export function Header({ onDemoClick }: HeaderProps) {
               </div>
               <div className="space-y-4 text-sm">
                 <HeaderCTA
-                  href="/register"
+                  onClick={() => {
+                    openDemo();
+                    setMenuOpen(false);
+                  }}
                   className="flex w-full justify-center gap-2 bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 text-white shadow-md shadow-indigo-400/20"
                 >
                   Réserver une démo

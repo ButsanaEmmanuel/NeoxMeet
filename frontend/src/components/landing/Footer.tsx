@@ -1,3 +1,4 @@
+import { useDemoModal } from '../providers/DemoModalProvider';
 import { OutlineCTA, PrimaryCTA } from './CTAs';
 
 const columns = [
@@ -75,11 +76,8 @@ const social = [
   },
 ];
 
-type FooterProps = {
-  onDemoClick?: () => void;
-};
-
-export function Footer({ onDemoClick }: FooterProps) {
+export function Footer() {
+  const { open: openDemo } = useDemoModal();
   return (
     <footer className="border-t border-slate-200 bg-gradient-to-b from-white via-white to-slate-50">
       <div className="mx-auto max-w-[1200px] space-y-12 px-6 py-20 lg:space-y-14">
@@ -103,8 +101,7 @@ export function Footer({ onDemoClick }: FooterProps) {
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
               <PrimaryCTA
-                href={onDemoClick ? undefined : '/register'}
-                onClick={onDemoClick}
+                onClick={openDemo}
                 className="h-11 w-full px-5 text-[15px] sm:w-auto"
               >
                 Réserver une démo
