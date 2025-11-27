@@ -1,94 +1,93 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService, JwtSignOptions } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
-import argon2 from 'argon2';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto, RegisterDto } from './auth.dto';
+import { AuthResponse } from './models/auth-response.type';
+import { PasswordHasherService } from './services/password-hasher.service';
+import { TokenPayload, TokenService } from './services/token.service';
 import { Tokens } from './tokens.interface';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly prisma: PrismaService, private readonly jwtService: JwtService, private readonly config: ConfigService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly tokenService: TokenService,
+    private readonly passwordHasher: PasswordHasherService,
+  ) {}
 
-  async register(dto: RegisterDto): Promise<Tokens> {
-    const existing = await this.prisma.user.findUnique({ where: { email: dto.email } });
-    if (existing) {
-      throw new BadRequestException('Email already registered');
-    }
-
-    const passwordHash = await argon2.hash(dto.password);
+  async register(dto: RegisterDto): Promise<AuthResponse> {
+    const normalizedEmail = this.normalizeEmail(dto.email);
+    await this.ensureEmailAvailable(normalizedEmail);
+    const passwordHash = await this.passwordHasher.hash(dto.password);
     const user = await this.prisma.user.create({
-      data: {
-        email: dto.email,
-        passwordHash,
-        name: dto.name,
-      },
+      data: { email: normalizedEmail, passwordHash, name: dto.fullName.trim() },
     });
-
-    return this.issueTokens(user.id, user.email, user.name);
+    const tokens = await this.issueTokens(user);
+    return { ...tokens, user: this.mapUser(user) };
   }
 
-  async login(dto: LoginDto): Promise<Tokens> {
-    const user = await this.prisma.user.findUnique({ where: { email: dto.email } });
+  async login(dto: LoginDto): Promise<AuthResponse> {
+    const normalizedEmail = this.normalizeEmail(dto.email);
+    const user = await this.prisma.user.findUnique({ where: { email: normalizedEmail } });
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
-
-    const valid = await argon2.verify(user.passwordHash, dto.password);
-    if (!valid) {
+    const validPassword = await this.passwordHasher.verify(user.passwordHash, dto.password);
+    if (!validPassword) {
       throw new UnauthorizedException('Invalid credentials');
     }
-
-    return this.issueTokens(user.id, user.email, user.name);
+    const tokens = await this.issueTokens(user);
+    return { ...tokens, user: this.mapUser(user) };
   }
 
   async refreshTokens(refreshToken: string): Promise<Tokens> {
+    let payload: TokenPayload;
     try {
-      const payload = await this.jwtService.verifyAsync(refreshToken, {
-        secret: this.config.get<string>('JWT_REFRESH_SECRET'),
-      });
-      const user = await this.prisma.user.findUnique({ where: { id: payload.sub } });
-      if (!user || (user.hashedRefreshToken && !(await argon2.verify(user.hashedRefreshToken, refreshToken)))) {
-        throw new UnauthorizedException('Invalid refresh token');
-      }
-      return this.issueTokens(user.id, user.email, user.name);
+      payload = await this.tokenService.verifyRefreshToken(refreshToken);
     } catch (error) {
       throw new UnauthorizedException('Invalid refresh token');
     }
+    const user = await this.prisma.user.findUnique({ where: { id: payload.sub } });
+    if (!user || !user.hashedRefreshToken) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+    const refreshValid = await this.passwordHasher.verify(user.hashedRefreshToken, refreshToken);
+    if (!refreshValid) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+    return this.issueTokens(user);
   }
 
-  async logout(userId: number) {
+  async logout(userId: number): Promise<{ success: boolean }> {
     await this.prisma.user.update({ where: { id: userId }, data: { hashedRefreshToken: null } });
     return { success: true };
   }
 
-  private async issueTokens(userId: number, email: string, name: string): Promise<Tokens> {
-    const payload = { sub: userId, email, name };
-    const accessSecret = this.config.get<string>('JWT_ACCESS_SECRET');
-    const refreshSecret = this.config.get<string>('JWT_REFRESH_SECRET');
-
-    if (!accessSecret || !refreshSecret) {
-      throw new Error('JWT secrets are not configured');
+  private async ensureEmailAvailable(email: string): Promise<void> {
+    const existing = await this.prisma.user.findUnique({ where: { email } });
+    if (existing) {
+      throw new ConflictException('Email already registered');
     }
-    const accessOptions: JwtSignOptions = {
-      secret: accessSecret,
-      expiresIn: (this.config.get<string>('JWT_ACCESS_TTL') ?? '15m') as any,
-    };
-    const refreshOptions: JwtSignOptions = {
-      secret: refreshSecret,
-      expiresIn: (this.config.get<string>('JWT_REFRESH_TTL') ?? '7d') as any,
-    };
-    const [accessToken, refreshToken] = await Promise.all([
-      this.jwtService.signAsync(payload, accessOptions),
-      this.jwtService.signAsync(payload, refreshOptions),
-    ]);
+  }
 
-    const hashedRefreshToken = await argon2.hash(refreshToken);
+  private async issueTokens(user: User): Promise<Tokens> {
+    const payload: TokenPayload = { sub: user.id, email: user.email, name: user.name };
+    const accessToken = await this.tokenService.createAccessToken(payload);
+    const refreshToken = await this.tokenService.createRefreshToken(payload);
+    await this.persistRefreshToken(user.id, refreshToken);
+    return { accessToken, refreshToken };
+  }
+
+  private async persistRefreshToken(userId: number, refreshToken: string): Promise<void> {
+    const hashedRefreshToken = await this.passwordHasher.hash(refreshToken);
     await this.prisma.user.update({ where: { id: userId }, data: { hashedRefreshToken } });
+  }
 
-    return {
-      accessToken,
-      refreshToken,
-    };
+  private mapUser(user: User): AuthResponse['user'] {
+    return { id: user.id, email: user.email, fullName: user.name, createdAt: user.createdAt.toISOString() };
+  }
+
+  private normalizeEmail(email: string): string {
+    return email.trim().toLowerCase();
   }
 }
