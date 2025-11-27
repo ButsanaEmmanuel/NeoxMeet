@@ -5,13 +5,17 @@ import { useEffect, useRef, useState } from 'react';
 import { cn } from '../../lib/utils';
 import { HeaderCTA } from './CTAs';
 
+type HeaderProps = {
+  onDemoClick?: () => void;
+};
+
 const links = [
   { label: 'Produit', href: '#product' },
   { label: 'Sécurité', href: '#security' },
   { label: 'Tarifs', href: '#pricing' },
 ];
 
-export function Header() {
+export function Header({ onDemoClick }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -107,7 +111,8 @@ export function Header() {
             S’inscrire
           </a>
           <HeaderCTA
-            href="/register"
+            href={onDemoClick ? undefined : '/register'}
+            onClick={onDemoClick}
             className="h-11 shrink-0 items-center gap-2 bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 px-5 text-[14px] text-white shadow-md shadow-indigo-500/20 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-400/30"
           >
             Réserver une démo
@@ -146,7 +151,13 @@ export function Header() {
             </div>
             <div className="space-y-4 text-sm">
               <HeaderCTA
-                href="/register"
+                href={onDemoClick ? undefined : '/register'}
+                onClick={() => {
+                  if (onDemoClick) {
+                    onDemoClick();
+                    setMenuOpen(false);
+                  }
+                }}
                 className="flex w-full justify-center gap-2 bg-gradient-to-r from-indigo-600 via-violet-600 to-cyan-500 text-white shadow-md shadow-indigo-400/20"
               >
                 Réserver une démo

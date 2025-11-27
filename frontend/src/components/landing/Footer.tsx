@@ -75,7 +75,11 @@ const social = [
   },
 ];
 
-export function Footer() {
+type FooterProps = {
+  onDemoClick?: () => void;
+};
+
+export function Footer({ onDemoClick }: FooterProps) {
   return (
     <footer className="border-t border-slate-200 bg-gradient-to-b from-white via-white to-slate-50">
       <div className="mx-auto max-w-[1200px] space-y-12 px-6 py-20 lg:space-y-14">
@@ -98,7 +102,11 @@ export function Footer() {
               <p className="text-sm text-slate-600">Réservez une démo ou démarrez en quelques secondes.</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end">
-              <PrimaryCTA href="/register" className="h-11 w-full px-5 text-[15px] sm:w-auto">
+              <PrimaryCTA
+                href={onDemoClick ? undefined : '/register'}
+                onClick={onDemoClick}
+                className="h-11 w-full px-5 text-[15px] sm:w-auto"
+              >
                 Réserver une démo
               </PrimaryCTA>
               <OutlineCTA href="/dashboard" className="h-11 w-full px-5 text-[15px] sm:w-auto">

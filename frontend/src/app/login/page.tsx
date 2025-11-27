@@ -137,140 +137,140 @@ export default function LoginPage() {
             <div className="w-full lg:max-w-lg">
               <div className="rounded-2xl border border-slate-200 bg-white shadow-lg">
                 <div className="space-y-6 p-8">
-                <div className="space-y-1">
-                  <h1 className="text-3xl font-semibold text-slate-900">Sign in</h1>
-                  <p className="text-sm text-slate-600">Fast, secure access to NeoxMeet.</p>
-                </div>
+                  <div className="space-y-1">
+                    <h1 className="text-3xl font-semibold text-slate-900">Sign in</h1>
+                    <p className="text-sm text-slate-600">Fast, secure access to NeoxMeet.</p>
+                  </div>
 
-                <div className="space-y-3">
-                  {socialProviders.map((provider) => (
+                  <div className="space-y-3">
+                    {socialProviders.map((provider) => (
+                      <button
+                        key={provider.name}
+                        type="button"
+                        className={`flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-3 text-sm font-semibold shadow-sm transition hover:border-indigo-200 hover:bg-indigo-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${provider.accent}`}
+                      >
+                        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-base font-bold text-slate-900 ring-1 ring-slate-100">
+                          {provider.icon}
+                        </span>
+                        <span className="flex-1 text-center">Continue with {provider.name}</span>
+                        <span className="text-xs text-slate-500">Enterprise SSO</span>
+                      </button>
+                    ))}
                     <button
-                      key={provider.name}
                       type="button"
-                      className={`flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-3 text-sm font-semibold shadow-sm transition hover:border-indigo-200 hover:bg-indigo-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${provider.accent}`}
+                      className="flex w-full items-center justify-between gap-3 rounded-xl border border-indigo-100 bg-indigo-50 px-4 py-3 text-sm font-semibold text-indigo-800 shadow-sm transition hover:border-indigo-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
                     >
-                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-base font-bold text-slate-900 ring-1 ring-slate-100">
-                        {provider.icon}
+                      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-base font-bold text-indigo-700 ring-1 ring-slate-100">
+                        ↗
                       </span>
-                      <span className="flex-1 text-center">Continue with {provider.name}</span>
-                      <span className="text-xs text-slate-500">Enterprise SSO</span>
+                      <span className="flex-1 text-center">Use work SSO</span>
+                      <span className="text-xs text-indigo-600">SAML / OIDC</span>
                     </button>
-                  ))}
+                  </div>
+
+                  <p className="text-xs text-slate-500">We never share your calendar or contacts without permission.</p>
+
+                  <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                    <div className="h-px flex-1 bg-slate-200" />
+                    <span>or sign in with email</span>
+                    <div className="h-px flex-1 bg-slate-200" />
+                  </div>
+
                   <button
                     type="button"
-                    className="flex w-full items-center justify-between gap-3 rounded-xl border border-indigo-100 bg-indigo-50 px-4 py-3 text-sm font-semibold text-indigo-800 shadow-sm transition hover:border-indigo-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                    onClick={() => {
+                      setMode('magic');
+                      setTimeout(() => emailFocusRef.current?.focus(), 50);
+                    }}
+                    className="text-left text-sm font-medium text-indigo-700 underline underline-offset-4 transition hover:text-indigo-500"
                   >
-                    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-base font-bold text-indigo-700 ring-1 ring-slate-100">
-                      ↗
-                    </span>
-                    <span className="flex-1 text-center">Use work SSO</span>
-                    <span className="text-xs text-indigo-600">SAML / OIDC</span>
+                    Signing in for a company? Use your work email →
                   </button>
-                </div>
 
-                <p className="text-xs text-slate-500">We never share your calendar or contacts without permission.</p>
-
-                <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                  <div className="h-px flex-1 bg-slate-200" />
-                  <span>or sign in with email</span>
-                  <div className="h-px flex-1 bg-slate-200" />
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMode('magic');
-                    setTimeout(() => emailFocusRef.current?.focus(), 50);
-                  }}
-                  className="text-left text-sm font-medium text-indigo-700 underline underline-offset-4 transition hover:text-indigo-500"
-                >
-                  Signing in for a company? Use your work email →
-                </button>
-
-                {mode === 'magic' ? (
-                  <form onSubmit={handleMagicSubmit(onMagicSubmit)} className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">Email address</label>
-                      <input
-                        type="email"
-                        {...magicEmailField}
-                        ref={(el) => {
-                          magicEmailRef(el);
-                          emailFocusRef.current = el;
-                        }}
-                        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition focus-visible:border-indigo-300 focus-visible:ring-2 focus-visible:ring-indigo-200"
-                        placeholder="you@company.com"
-                      />
-                      {magicErrors.email && <p className="text-xs text-red-500">{magicErrors.email.message}</p>}
-                    </div>
-                    <div className="space-y-2">
-                      <button
-                        type="submit"
-                        disabled={isMagicSubmitting || isCooldown}
-                        className="w-full rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-70"
-                      >
-                        {isMagicSubmitting ? 'Sending secure link…' : 'Send secure link'}
-                      </button>
-                      <p className="text-xs text-slate-500">One-time link, expires in 10 minutes. No password required.</p>
-                      {linkMessage && <p className="text-xs font-medium text-emerald-600">{linkMessage}</p>}
-                      {rateLimitMessage && <p className="text-xs text-amber-600">{rateLimitMessage}</p>}
-                    </div>
-                    <div>
-                      <button
-                        type="button"
-                        onClick={() => setMode('password')}
-                        className="text-sm font-semibold text-indigo-700 underline underline-offset-4 transition hover:text-indigo-500"
-                      >
-                        Use password instead
-                      </button>
-                    </div>
-                  </form>
-                ) : (
-                  <form onSubmit={handlePasswordSubmit(onPasswordSubmit)} className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">Email</label>
-                      <input
-                        type="email"
-                        {...registerPassword('email')}
-                        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition focus-visible:border-indigo-300 focus-visible:ring-2 focus-visible:ring-indigo-200"
-                        placeholder="you@company.com"
-                      />
-                      {passwordErrors.email && <p className="text-xs text-red-500">{passwordErrors.email.message}</p>}
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">Password</label>
-                      <input
-                        type="password"
-                        {...registerPassword('password')}
-                        className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition focus-visible:border-indigo-300 focus-visible:ring-2 focus-visible:ring-indigo-200"
-                        placeholder="••••••••"
-                      />
-                      {passwordErrors.password && <p className="text-xs text-red-500">{passwordErrors.password.message}</p>}
-                    </div>
-                    {error && <p className="text-sm text-red-500">{error}</p>}
-                    <div className="space-y-2">
-                      <button
-                        type="submit"
-                        disabled={isPasswordSubmitting}
-                        className="w-full rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 disabled:opacity-70"
-                      >
-                        {isPasswordSubmitting ? 'Signing in…' : 'Sign in'}
-                      </button>
-                      <div className="flex flex-wrap items-center gap-3 text-sm text-indigo-700">
-                        <Link href="#" className="underline underline-offset-4 hover:text-indigo-500">
-                          Forgot password?
-                        </Link>
+                  {mode === 'magic' ? (
+                    <form onSubmit={handleMagicSubmit(onMagicSubmit)} className="space-y-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Email address</label>
+                        <input
+                          type="email"
+                          {...magicEmailField}
+                          ref={(el) => {
+                            magicEmailRef(el);
+                            emailFocusRef.current = el;
+                          }}
+                          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition focus-visible:border-indigo-300 focus-visible:ring-2 focus-visible:ring-indigo-200"
+                          placeholder="you@company.com"
+                        />
+                        {magicErrors.email && <p className="text-xs text-red-500">{magicErrors.email.message}</p>}
+                      </div>
+                      <div className="space-y-2">
+                        <button
+                          type="submit"
+                          disabled={isMagicSubmitting || isCooldown}
+                          className="w-full rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-70"
+                        >
+                          {isMagicSubmitting ? 'Sending secure link…' : 'Send secure link'}
+                        </button>
+                        <p className="text-xs text-slate-500">One-time link, expires in 10 minutes. No password required.</p>
+                        {linkMessage && <p className="text-xs font-medium text-emerald-600">{linkMessage}</p>}
+                        {rateLimitMessage && <p className="text-xs text-amber-600">{rateLimitMessage}</p>}
+                      </div>
+                      <div>
                         <button
                           type="button"
-                          onClick={() => setMode('magic')}
-                          className="underline underline-offset-4 hover:text-indigo-500"
+                          onClick={() => setMode('password')}
+                          className="text-sm font-semibold text-indigo-700 underline underline-offset-4 transition hover:text-indigo-500"
                         >
-                          Use email link instead
+                          Use password instead
                         </button>
                       </div>
-                    </div>
-                  </form>
-                )}
+                    </form>
+                  ) : (
+                    <form onSubmit={handlePasswordSubmit(onPasswordSubmit)} className="space-y-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Email</label>
+                        <input
+                          type="email"
+                          {...registerPassword('email')}
+                          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition focus-visible:border-indigo-300 focus-visible:ring-2 focus-visible:ring-indigo-200"
+                          placeholder="you@company.com"
+                        />
+                        {passwordErrors.email && <p className="text-xs text-red-500">{passwordErrors.email.message}</p>}
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Password</label>
+                        <input
+                          type="password"
+                          {...registerPassword('password')}
+                          className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-base text-slate-900 transition focus-visible:border-indigo-300 focus-visible:ring-2 focus-visible:ring-indigo-200"
+                          placeholder="••••••••"
+                        />
+                        {passwordErrors.password && <p className="text-xs text-red-500">{passwordErrors.password.message}</p>}
+                      </div>
+                      {error && <p className="text-sm text-red-500">{error}</p>}
+                      <div className="space-y-2">
+                        <button
+                          type="submit"
+                          disabled={isPasswordSubmitting}
+                          className="w-full rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 disabled:opacity-70"
+                        >
+                          {isPasswordSubmitting ? 'Signing in…' : 'Sign in'}
+                        </button>
+                        <div className="flex flex-wrap items-center gap-3 text-sm text-indigo-700">
+                          <Link href="#" className="underline underline-offset-4 hover:text-indigo-500">
+                            Forgot password?
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => setMode('magic')}
+                            className="underline underline-offset-4 hover:text-indigo-500"
+                          >
+                            Use email link instead
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  )}
 
                 <div className="flex flex-col gap-3 border-t border-slate-200 pt-4 text-xs text-slate-500">
                   <p>New device? We may ask for a verification code.</p>
@@ -340,6 +340,7 @@ export default function LoginPage() {
               </div>
             </div>
           </aside>
+        </div>
         </div>
       </section>
 
