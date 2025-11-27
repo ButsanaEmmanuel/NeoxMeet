@@ -1,9 +1,13 @@
+"use client";
+
+import { useState } from 'react';
 import { Footer } from '../components/landing/Footer';
 import { Header } from '../components/landing/Header';
 import { OutlineCTA, PrimaryCTA, TrustStrip } from '../components/landing/CTAs';
 import { HowItWorksSection } from '../components/landing/HowItWorks';
 import { LiveTranslationSection } from '../components/landing/LiveTranslationSection';
 import { SmartRecapSection } from '../components/landing/SmartRecapSection';
+import { DemoModal } from '../components/landing/DemoModal';
 
 const highlights = [
   {
@@ -63,6 +67,10 @@ function ArrowIcon() {
 }
 
 export default function Home() {
+  const [demoOpen, setDemoOpen] = useState(false);
+  const openDemo = () => setDemoOpen(true);
+  const closeDemo = () => setDemoOpen(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white via-white to-slate-50 text-slate-900">
       <div className="relative overflow-hidden">
@@ -72,7 +80,7 @@ export default function Home() {
           <div className="absolute left-[-8%] top-20 h-60 w-60 rounded-full bg-gradient-to-br from-indigo-100 via-white to-sky-100 blur-[120px]" />
         </div>
 
-        <Header />
+        <Header onDemoClick={openDemo} />
 
         <main className="relative mx-auto max-w-6xl space-y-16 px-6 pb-20 pt-10 lg:pt-16">
           <section className="relative grid items-center gap-12 rounded-[32px] bg-white/80 px-6 py-12 shadow-[0_30px_80px_-40px_rgba(79,70,229,0.35)] backdrop-blur-xl lg:grid-cols-[1.05fr_0.95fr]">
@@ -96,7 +104,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <PrimaryCTA href="/register">
+                <PrimaryCTA onClick={openDemo}>
                   Réserver une démo
                   <ArrowIcon />
                 </PrimaryCTA>
@@ -294,7 +302,8 @@ export default function Home() {
         </main>
       </div>
 
-      <Footer />
+      <Footer onDemoClick={openDemo} />
+      <DemoModal open={demoOpen} onClose={closeDemo} />
     </div>
   );
 }

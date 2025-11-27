@@ -6,13 +6,17 @@ import { cn } from '../../lib/utils';
 import { AuthModal, type AuthMode } from './AuthModal';
 import { HeaderCTA } from './CTAs';
 
+type HeaderProps = {
+  onDemoClick?: () => void;
+};
+
 const links = [
   { label: 'Produit', href: '#product' },
   { label: 'Sécurité', href: '#security' },
   { label: 'Tarifs', href: '#pricing' },
 ];
 
-export function Header() {
+export function Header({ onDemoClick }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
